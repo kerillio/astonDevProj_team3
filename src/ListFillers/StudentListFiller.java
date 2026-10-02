@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StudentFileReader implements ListFiller{
+public final class StudentListFiller implements ListFiller{
     List<Student> studentList = new ArrayList<>();
 
     @Override

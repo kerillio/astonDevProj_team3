@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarFiller implements ListFiller{
+public final class CarListFiller implements ListFiller{
     List<Car> carList = new ArrayList<>();
 
 
