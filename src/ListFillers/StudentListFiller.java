@@ -16,7 +16,7 @@ public final class StudentListFiller implements ListFiller{
 
     @Override
     public List<Student> fileFiller() {
-        Path studentPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\StudentList");
+        Path studentPath = Paths.get("src/Files/StudentList");
 
         List<String> carLineList;
 

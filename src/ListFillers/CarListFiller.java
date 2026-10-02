@@ -17,7 +17,7 @@ public final class CarListFiller implements ListFiller{
 
     @Override
     public List<Car> fileFiller() {
-        Path carPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\CarList");
+        Path carPath = Paths.get("src/Files/CarList");
 
         List<String> carLineList;
 

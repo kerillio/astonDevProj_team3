@@ -1,6 +1,6 @@
 import java.util.*;
 
-public class TUI {
+ public class TUI {
 
     //пока примерные названия. по мере заполнения классов необходимо их изменить List.of("Автобус", "Пользователь", "Студент", "Автомобиль", "Бочка", "Выход")
     private static final ArrayList<String> classNameList = new ArrayList<>();

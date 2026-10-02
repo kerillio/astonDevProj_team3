@@ -17,7 +17,7 @@ public final class UserListFiller implements ListFiller {
 
     @Override
     public List<User> fileFiller() {
-        Path userPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\UserList");
+        Path userPath = Paths.get("src/Files/UserList");
 
         List<String> userLineList;
 
