@@ -18,19 +18,19 @@ public final class StudentListFiller implements ListFiller{
     public List<Student> fileFiller() {
         Path studentPath = Paths.get("src/Files/StudentList");
 
-        List<String> carLineList;
+        List<String> studentLineList;
 
         {
             try {
-                carLineList = Files.readAllLines(studentPath);
+                studentLineList = Files.readAllLines(studentPath);
             } catch (IOException e) {
                 throw new RuntimeException("Нет подходящей БД");
             }
         }
 
-        Pattern carPattern = Pattern.compile("^(\\d+);(\\d+.\\d+);(\\d{4})$");
-        for (String s : carLineList) {
-            Matcher matcher = carPattern.matcher(s);
+        Pattern studentPattern = Pattern.compile("^(\\d+);(\\d+.\\d+);(\\d{4})$");
+        for (String s : studentLineList) {
+            Matcher matcher = studentPattern.matcher(s);
             matcher.matches();
             studentList.add(Student.builder().groupNumber(matcher.group(1)).averageGrade(Double.parseDouble(matcher.group(2))).recordBookNumber(matcher.group(3)).build());
         }
