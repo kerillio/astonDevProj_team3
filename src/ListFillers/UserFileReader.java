@@ -1,4 +1,4 @@
-package FileReaders;
+package ListFillers;
 
 import Models.User;
 
@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class UserFileReader {
+public final class UserFileReader implements ListFiller {
 
     List<User> userList = new ArrayList<>();
 
-    public List<User> readUserFile() {
+    @Override
+    public List<User> fileFiller() {
         Path userPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\UserList");
 
         List<String> userLineList;
@@ -35,5 +36,17 @@ public final class UserFileReader {
             userList.add(User.builder().name(matcher.group(1)).password(matcher.group(2)).email(matcher.group(3)).build());
         }
         return userList;
+    }
+
+
+
+    @Override
+    public List manualFiller() {
+        return null;
+    }
+
+    @Override
+    public List randomfiller() {
+        return null;
     }
 }

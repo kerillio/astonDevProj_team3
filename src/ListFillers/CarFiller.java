@@ -1,4 +1,4 @@
-package FileReaders;
+package ListFillers;
 
 import Models.Car;
 
@@ -11,11 +11,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarFileReader {
+public final class CarFiller implements ListFiller{
     List<Car> carList = new ArrayList<>();
 
 
-    public List<Car> readCarFile() {
+    @Override
+    public List<Car> fileFiller() {
         Path carPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\CarList");
 
         List<String> carLineList;
@@ -38,4 +39,15 @@ public final class CarFileReader {
     }
 
 
+
+
+    @Override
+    public List<Car> manualFiller() {
+        return null;
+    }
+
+    @Override
+    public List<Car> randomfiller() {
+        return null;
+    }
 }

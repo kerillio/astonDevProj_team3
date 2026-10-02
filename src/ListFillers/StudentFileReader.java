@@ -1,6 +1,5 @@
-package FileReaders;
+package ListFillers;
 
-import Models.Car;
 import Models.Student;
 
 import java.io.IOException;
@@ -12,10 +11,11 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StudentFileReader {
+public final class StudentFileReader implements ListFiller{
     List<Student> studentList = new ArrayList<>();
 
-    public List<Student> readStudentFile() {
+    @Override
+    public List<Student> fileFiller() {
         Path studentPath = Paths.get("C:\\Users\\MSI\\IdeaProjects\\astonDevProj_team3\\src\\Files\\StudentList");
 
         List<String> carLineList;
@@ -35,5 +35,17 @@ public final class StudentFileReader {
             studentList.add(Student.builder().groupNumber(matcher.group(1)).averageGrade(Double.parseDouble(matcher.group(2))).recordBookNumber(matcher.group(3)).build());
         }
         return studentList;
+    }
+
+
+
+    @Override
+    public List manualFiller() {
+        return null;
+    }
+
+    @Override
+    public List randomfiller() {
+        return null;
     }
 }
