@@ -4,10 +4,10 @@ import Models.Car;
 
 import java.util.List;
 
-public interface ListFiller {
-    List fileFiller();
+public interface ListFiller<T> {
+    List<T> fileFiller(int size);
 
-    List manualFiller();
+    List<T>  manualFiller(int size);
 
-    List randomfiller();
+    List<T>  randomFiller(int size);
 }

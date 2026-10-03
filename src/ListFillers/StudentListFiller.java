@@ -15,7 +15,7 @@ public final class StudentListFiller implements ListFiller{
     List<Student> studentList = new ArrayList<>();
 
     @Override
-    public List<Student> fileFiller() {
+    public List<Student> fileFiller(int size) {
         Path studentPath = Paths.get("src/Files/StudentList");
 
         List<String> carLineList;
@@ -40,12 +40,12 @@ public final class StudentListFiller implements ListFiller{
 
 
     @Override
-    public List manualFiller() {
+    public List manualFiller(int size) {
         return null;
     }
 
     @Override
-    public List randomfiller() {
+    public List randomFiller(int size) {
         return null;
     }
 }

@@ -11,12 +11,12 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarListFiller implements ListFiller{
+public final class CarListFiller implements ListFiller<Car>{
     List<Car> carList = new ArrayList<>();
 
 
     @Override
-    public List<Car> fileFiller() {
+    public List<Car> fileFiller(int size) {
         Path carPath = Paths.get("src/Files/CarList");
 
         List<String> carLineList;
@@ -42,12 +42,12 @@ public final class CarListFiller implements ListFiller{
 
 
     @Override
-    public List<Car> manualFiller() {
+    public List<Car> manualFiller(int size) {
         return null;
     }
 
     @Override
-    public List<Car> randomfiller() {
+    public List<Car> randomFiller(int size) {
         return null;
     }
 }
