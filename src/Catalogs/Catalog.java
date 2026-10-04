@@ -4,18 +4,20 @@ import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Comparator;
 
-import Strategies.Sort.Abstract;
+import Strategies.Sort.SortStrategy;
 
+// Композиция для того, чтобы использовать кастомную сортировку над коллекцией
+// Вначале заполняется arrList, потом используется сортировка
 public class Catalog<T> extends AbstractList<T> {
 	private final ArrayList<T> arrList;
-	private Strategies.Sort.Abstract sorter;
+	private Strategies.Sort.SortStrategy sorter;
 
 	public Catalog() {
 		this.arrList = new ArrayList<T>();
-		this.sorter = new Strategies.Sort.Base();
+		this.sorter = new Strategies.Sort.DefaultSortStrategy();
 	}
 
-	public Catalog(ArrayList<T> arr, Strategies.Sort.Abstract sorter) {
+	public Catalog(ArrayList<T> arr, Strategies.Sort.SortStrategy sorter) {
 		this.arrList = arr;
 		this.sorter = sorter;
 	}
