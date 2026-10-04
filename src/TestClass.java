@@ -1,5 +1,7 @@
+import Models.AbstractCustomClass;
+
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import static java.util.Arrays.stream;
@@ -10,13 +12,12 @@ public class TestClass extends AbstractCustomClass {
     private String password;
 
 
-    @Override
-    ArrayList<String> getFields() {
+    public ArrayList<String> getFields() {
         return new ArrayList<String>(List.of("age", "name", "password"));
     }
 
-    @Override
-    ArrayList<AbstractCustomClass> readFromFile() {
+
+    public ArrayList<AbstractCustomClass> readFromFile() {
         return null;
     }
 
