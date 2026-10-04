@@ -1,8 +1,10 @@
 package Models;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class User {
+public final class User extends AbstractCustomClass{
     // ПОЛЯ
     private final String name;
     private final String password;
@@ -69,6 +71,14 @@ public final class User {
     @Override
     public int hashCode() {
         return Objects.hash(name, password, email);
+    }
+
+    public  ArrayList<String> getFields() {
+        return new ArrayList<>(List.of("name", "password", "email"));
+    }
+
+    public ArrayList<AbstractCustomClass> readFromFile() {
+        return null;
     }
 
     //Реализация Builder через статический внутренний класс

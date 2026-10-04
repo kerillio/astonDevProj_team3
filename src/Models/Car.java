@@ -1,11 +1,17 @@
 package Models;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 import java.util.Objects;
 
-public final class Car {
+public final class Car extends AbstractCustomClass{
     // ПОЛЯ
     private final int power;
     private final String model;
     private final int year;
+
+
+    public static final Comparator<Car> BY_POWER = Comparator.comparingInt(Car::getPower);
 
     // КОНСТРУКТОР
     private Car(Builder builder) {
@@ -71,6 +77,12 @@ public final class Car {
     public int hashCode() {
         return Objects.hash(power, model, year);
     }
+
+    public  ArrayList<String> getFields() {
+        return new ArrayList<>(List.of("power", "year", "model"));
+    }
+
+
 
     //Реализация Builder через статический внутренний класс
     // Примечание: для каждого класса мы реализуем свой билдер - у нас нет общих данных

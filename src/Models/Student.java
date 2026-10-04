@@ -1,7 +1,9 @@
 package Models;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 
-public final class Student {
+public final class Student extends AbstractCustomClass{
 
     // ПОЛЯ
     private final String groupNumber;
@@ -73,6 +75,16 @@ public final class Student {
     @Override
     public int hashCode() {
         return Objects.hash(groupNumber, averageGrade, recordBookNumber);
+    }
+
+
+    public  ArrayList<String> getFields() {
+        return new ArrayList<>(List.of("groupNumber", "averageGrade", "recordBookNumber"));
+    }
+
+
+    public ArrayList<AbstractCustomClass> readFromFile() {
+        return null;
     }
 
 

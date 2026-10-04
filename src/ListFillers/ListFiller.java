@@ -5,7 +5,7 @@ import Models.Car;
 import java.util.List;
 
 public interface ListFiller<T> {
-    List<T> fileFiller(int size);
+    List<T> fileFiller();
 
     List<T>  manualFiller(int size);
 

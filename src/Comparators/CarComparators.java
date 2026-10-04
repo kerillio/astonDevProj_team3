@@ -2,7 +2,7 @@ package Comparators;
 import Models.Car;
 import java.util.Comparator;
 
-public final class CarComparators {
+public final class CarComparators{
 
     // < 0  object1 должен идти раньше object2
     // = 0  равны по этому полю
