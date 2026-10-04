@@ -15,19 +15,8 @@ import java.util.regex.Pattern;
 public final class UserListFiller implements ListFiller<User> {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
-    int size;
-    Scanner sc = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
-    @Override
-    public int setSize(){
-
-        System.out.print("Введите ограничение на длину списка: ");
-
-        String sizeInput = sc.nextLine();
-        size = Integer.parseInt(sizeInput);
-
-        return size;
-    }
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);

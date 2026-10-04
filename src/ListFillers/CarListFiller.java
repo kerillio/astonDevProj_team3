@@ -17,19 +17,8 @@ public final class CarListFiller implements ListFiller<Car> {
 
     private static final Pattern CAR_PATTERN = Pattern.compile("^(\\d{2,4});([^;]+);(\\d{4})$");
     private static final String CAR_DATA_PATH = "src/Files/CarList";
-    int size;
-    Scanner sc = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
-    @Override
-    public int setSize(){
-
-        System.out.print("Введите ограничение на длину списка: ");
-
-        String sizeInput = sc.nextLine();
-        size = Integer.parseInt(sizeInput);
-
-        return size;
-    }
 
     private Car parseCar(String line) {
         Matcher matcher = CAR_PATTERN.matcher(line);

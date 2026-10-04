@@ -17,19 +17,9 @@ public final class StudentListFiller implements ListFiller<Student> {
 
     private static final Pattern STUDENT_PATTERN = Pattern.compile("^(\\d+);(\\d+(?:\\.\\d+)?);(\\d{4})$");
     private static final String STUDENT_DATA_PATH = "src/Files/StudentList";
-    int size;
-    Scanner sc = new Scanner(System.in);
+    private static final Scanner SCANNER = new Scanner(System.in);
 
-    @Override
-    public int setSize(){
 
-        System.out.print("Введите ограничение на длину списка: ");
-
-        String sizeInput = sc.nextLine();
-        size = Integer.parseInt(sizeInput);
-
-        return size;
-    }
 
     private Student parseStudent(String line) {
         Matcher matcher = STUDENT_PATTERN.matcher(line);
