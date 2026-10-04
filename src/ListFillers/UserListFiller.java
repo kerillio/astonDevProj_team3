@@ -8,12 +8,26 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class UserListFiller implements ListFiller<User> {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
+    int size;
+    Scanner sc = new Scanner(System.in);
+
+    @Override
+    public int setSize(){
+
+        System.out.print("Введите ограничение на длину списка: ");
+
+        String sizeInput = sc.nextLine();
+        size = Integer.parseInt(sizeInput);
+
+        return size;
+    }
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);
