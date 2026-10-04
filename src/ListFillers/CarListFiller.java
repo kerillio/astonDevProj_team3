@@ -7,47 +7,78 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarListFiller implements ListFiller{
-    List<Car> carList = new ArrayList<>();
+public final class CarListFiller implements ListFiller<Car> {
 
+    private static final Pattern CAR_PATTERN = Pattern.compile("^(\\d{2,4});([^;]+);(\\d{4})$");
+    private static final String CAR_DATA_PATH = "src/Files/CarList";
 
-    @Override
-    public List<Car> fileFiller() {
-        Path carPath = Paths.get("src/Files/CarList");
+    private Car parseCar(String line) {
+        Matcher matcher = CAR_PATTERN.matcher(line);
 
-        List<String> carLineList;
-
-        {
-            try {
-                carLineList = Files.readAllLines(carPath);
-            } catch (IOException e) {
-                throw new RuntimeException("Нет подходящей БД");
-            }
+        if (!matcher.matches()) {
+            throw new IllegalArgumentException("Некорректная строка: " + line);
         }
 
-        Pattern carPattern = Pattern.compile("^(\\d{2,4});([^;]+);(\\d{4})$");
-        for (String s : carLineList) {
-            Matcher matcher = carPattern.matcher(s);
-            matcher.matches();
-            carList.add(Car.builder().model(matcher.group(2)).power(Integer.parseInt(matcher.group(1))).year(Integer.parseInt(matcher.group(3))).build());
-        }
-        return carList;
+        return Car.builder()
+                .power(Integer.parseInt(matcher.group(1)))
+                .model(matcher.group(2))
+                .year(Integer.parseInt(matcher.group(3)))
+                .build();
     }
 
+    private List<String> readFileLines() {
+        Path carPath = Paths.get(CAR_DATA_PATH);
 
-
+        try {
+            return Files.readAllLines(carPath);
+        } catch (IOException e) {
+            throw new RuntimeException("Нет подходящей БД", e);
+        }
+    }
 
     @Override
-    public List<Car> manualFiller() {
+    public List<Car> manualFiller(int size) {
         return null;
     }
 
     @Override
-    public List<Car> randomfiller() {
-        return null;
+    public List<Car> randomFiller(int size) {
+        List<String> lines = readFileLines();
+
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        Collections.shuffle(lines);
+
+        List<Car> cars = new ArrayList<>(size);
+
+        for (int i = 0; i < size; i++) {
+            cars.add(parseCar(lines.get(i)));
+        }
+
+        return cars;
+    }
+
+    @Override
+    public List<Car> fileFiller(int size) {
+        List<String> lines = readFileLines();
+
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        List<Car> cars = new ArrayList<>(size);
+
+        for (int i = 0; i < size; i++) {
+            cars.add(parseCar(lines.get(i)));
+        }
+
+        return cars;
     }
 }

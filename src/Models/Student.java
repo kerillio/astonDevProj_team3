@@ -81,7 +81,7 @@ public final class Student {
     public static final class Builder {
 
         private String groupNumber;
-        private Double averageGrade;
+        private double averageGrade;
         private String recordBookNumber;
 
         private Builder() {}
