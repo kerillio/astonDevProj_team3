@@ -49,7 +49,40 @@ public final class UserListFiller implements ListFiller<User> {
 
     @Override
     public List<User> manualFiller(int size) {
-        return null;
+        if (size <= 0) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        List<User> users = new ArrayList<>();
+        boolean isFillingFinished = false;
+
+        while (!isFillingFinished) {
+
+            System.out.println("\nВведите данные в формате: Имя;Пароль;Почта");
+            System.out.println("Чтобы закончить введите: \"Стоп\"");
+
+            String fillingLine = SCANNER.nextLine();
+
+            if (!fillingLine.equalsIgnoreCase("Стоп")) {
+                Matcher matcher = USER_PATTERN.matcher(fillingLine);
+
+                if (!matcher.matches()) {
+                    System.out.println("\nНекорректный формат или вводимые данные: " + fillingLine);
+                    continue;
+                }
+
+                users.add(parseUser(fillingLine));
+            }
+
+            if (fillingLine.equalsIgnoreCase("Стоп")) {
+                isFillingFinished = true;
+            }
+
+            if (users.size() == size) {
+                isFillingFinished = true;
+            }
+        }
+        return users;
     }
 
     @Override
