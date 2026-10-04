@@ -14,6 +14,7 @@ import java.util.regex.Pattern;
 public final class UserListFiller implements ListFiller<User> {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
+    private static final java.util.Scanner SCANNER = new java.util.Scanner(System.in);
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);
@@ -46,7 +47,40 @@ public final class UserListFiller implements ListFiller<User> {
 
     @Override
     public List<User> manualFiller(int size) {
-        return null;
+        if (size <= 0) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        List<User> users = new ArrayList<>();
+        boolean isFillingFinished = false;
+
+        while (!isFillingFinished) {
+
+            System.out.println("\nВведите данные в формате: Имя;Пароль;Почта");
+            System.out.println("Чтобы закончить введите: \"Стоп\"");
+
+            String fillingLine = SCANNER.nextLine();
+
+            if (!fillingLine.equalsIgnoreCase("Стоп")) {
+                Matcher matcher = USER_PATTERN.matcher(fillingLine);
+
+                if (!matcher.matches()) {
+                    System.out.println("\nНекорректный формат или вводимые данные: " + fillingLine);
+                    continue;
+                }
+
+                users.add(parseUser(fillingLine));
+            }
+
+            if (fillingLine.equalsIgnoreCase("Стоп")) {
+                isFillingFinished = true;
+            }
+
+            if (users.size() == size) {
+                isFillingFinished = true;
+            }
+        }
+        return users;
     }
 
     @Override
