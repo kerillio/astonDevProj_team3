@@ -1,6 +1,8 @@
 package ListFillers;
 
 import Models.User;
+import Validation.UserValidator;
+
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -8,12 +10,15 @@ import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public final class UserListFiller implements ListFiller<User> {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
+    private static final Scanner SCANNER = new Scanner(System.in);
+
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);
@@ -46,7 +51,40 @@ public final class UserListFiller implements ListFiller<User> {
 
     @Override
     public List<User> manualFiller(int size) {
-        return null;
+        if (size <= 0) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        List<User> users = new ArrayList<>();
+        boolean isFillingFinished = false;
+
+        while (!isFillingFinished) {
+
+            System.out.println("\nВведите данные в формате: Имя;Пароль;Почта");
+            System.out.println("Чтобы закончить введите: \"Стоп\"");
+
+            String fillingLine = SCANNER.nextLine();
+
+            if (!fillingLine.equalsIgnoreCase("Стоп")) {
+                Matcher matcher = USER_PATTERN.matcher(fillingLine);
+
+                if (!matcher.matches()) {
+                    System.out.println("\nНекорректный формат или вводимые данные: " + fillingLine);
+                    continue;
+                }
+
+                users.add(parseUser(fillingLine));
+            }
+
+            if (fillingLine.equalsIgnoreCase("Стоп")) {
+                isFillingFinished = true;
+            }
+
+            if (users.size() == size) {
+                isFillingFinished = true;
+            }
+        }
+        return users;
     }
 
     @Override
