@@ -1,6 +1,7 @@
 package ListFillers;
 
 import Models.Student;
+import Validation.StudentValidator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +18,7 @@ public final class StudentListFiller implements ListFiller<Student> {
 
     private static final Pattern STUDENT_PATTERN = Pattern.compile("^(\\d+);(\\d+(?:\\.\\d+)?);(\\d{4})$");
     private static final String STUDENT_DATA_PATH = "src/Files/StudentList";
+    private static final java.util.Scanner SCANNER = new java.util.Scanner(System.in);
 
     private Student parseStudent(String line) {
         Matcher matcher = STUDENT_PATTERN.matcher(line);

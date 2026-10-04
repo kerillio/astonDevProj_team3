@@ -1,6 +1,7 @@
 package ListFillers;
 
 import Models.Car;
+import Validation.CarValidator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -81,6 +82,7 @@ public final class CarListFiller implements ListFiller<Car> {
         }
         return cars;
     }
+
 
     @Override
     public List<Car> randomFiller(int size) {
