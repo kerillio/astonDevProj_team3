@@ -16,6 +16,7 @@ public final class StudentListFiller implements ListFiller<Student> {
 
     private static final Pattern STUDENT_PATTERN = Pattern.compile("^(\\d+);(\\d+(?:\\.\\d+)?);(\\d{4})$");
     private static final String STUDENT_DATA_PATH = "src/Files/StudentList";
+    private static final java.util.Scanner SCANNER = new java.util.Scanner(System.in);
 
     private Student parseStudent(String line) {
         Matcher matcher = STUDENT_PATTERN.matcher(line);
@@ -43,7 +44,40 @@ public final class StudentListFiller implements ListFiller<Student> {
 
     @Override
     public List<Student> manualFiller(int size) {
-        return null; // РЕАЛИЗАЦИЯ ПОЛЬЗОВАТЕЛЬСКОГО ВВОДА
+        if (size <= 0) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
+
+        List<Student> students = new ArrayList<>();
+        boolean isFillingFinished = false;
+
+        while (!isFillingFinished) {
+
+            System.out.println("\nВведите данные в формате: НомерГруппы;СреднийБалл;НомерЗачётки");
+            System.out.println("Чтобы закончить введите: \"Стоп\"");
+
+            String fillingLine = SCANNER.nextLine();
+
+            if (!fillingLine.equalsIgnoreCase("Стоп")) {
+                Matcher matcher = STUDENT_PATTERN.matcher(fillingLine);
+
+                if (!matcher.matches()) {
+                    System.out.println("\nНекорректный формат или вводимые данные: " + fillingLine);
+                    continue;
+                }
+
+                students.add(parseStudent(fillingLine));
+            }
+
+            if (fillingLine.equalsIgnoreCase("Стоп")) {
+                isFillingFinished = true;
+            }
+
+            if (students.size() == size) {
+                isFillingFinished = true;
+            }
+        }
+        return students;
     }
 
     @Override
