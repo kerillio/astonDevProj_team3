@@ -117,16 +117,16 @@ public final class CarListFiller implements ListFiller {
 
 
     @Override
-    public List<Car> fileFiller(int size) {
+    public List<Car> fileFiller() {
         List<String> lines = readFileLines();
 
-        if (size <= 0 || size > lines.size()) {
-            throw new IllegalArgumentException("Некорректный размер списка");
-        }
+//        if (size <= 0 || size > lines.size()) {
+//            throw new IllegalArgumentException("Некорректный размер списка");
+//        }
 
         List<Car> cars = new ArrayList<>();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < lines.size(); i++) {
             cars.add(parseCar(lines.get(i)));
         }
 

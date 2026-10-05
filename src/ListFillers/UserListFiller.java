@@ -121,16 +121,16 @@ public final class UserListFiller implements ListFiller {
     }
 
     @Override
-    public List<User> fileFiller(int size) {
+    public List<User> fileFiller() {
         List<String> lines = readFileLines();
 
-        if (size <= 0 || size > lines.size()) {
-            throw new IllegalArgumentException("Некорректный размер списка");
-        }
+//        if (size <= 0 || size > lines.size()) {
+//            throw new IllegalArgumentException("Некорректный размер списка");
+//        }
 
         List<User> users = new ArrayList<>();
 
-        for (int i = 0; i < size; i++) {
+        for (int i = 0; i < lines.size(); i++) {
             users.add(parseUser(lines.get(i)));
         }
 
