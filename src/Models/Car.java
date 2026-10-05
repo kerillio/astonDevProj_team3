@@ -1,4 +1,7 @@
 package Models;
+import ListFillers.CarListFiller;
+import ListFillers.ListFiller;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
@@ -11,13 +14,13 @@ public final class Car extends AbstractCustomClass{
     private final int year;
 
 
-    public static final Comparator<Car> BY_POWER = Comparator.comparingInt(Car::getPower);
 
     // КОНСТРУКТОР
     private Car(Builder builder) {
         this.power = builder.power;
         this.model = builder.model;
         this.year = builder.year;
+        this.listFillerStrategy = new CarListFiller();
     }
 
     // ПУБЛИЧНОЕ АПИ

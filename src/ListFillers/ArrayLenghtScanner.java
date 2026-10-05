@@ -6,7 +6,7 @@ public class ArrayLenghtScanner {
 
     private static final Scanner SCANNER = new Scanner(System.in);
 
-    public int scanSize() {
+    public static int scanSize() {
 
 
         System.out.print("Введите ограничение на длину списка: ");

@@ -1,4 +1,7 @@
 package Models;
+import ListFillers.ListFiller;
+import ListFillers.UserListFiller;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +18,7 @@ public final class User extends AbstractCustomClass{
         this.name = builder.name;
         this.password = builder.password;
         this.email = builder.email;
+        this.listFillerStrategy = new UserListFiller();
     }
 
     // ПУБЛИЧНОЕ АПИ

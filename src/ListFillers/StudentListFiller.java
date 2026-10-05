@@ -1,5 +1,6 @@
 package ListFillers;
 
+import Models.Car;
 import Models.Student;
 import Validation.StudentValidator;
 
@@ -14,11 +15,24 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StudentListFiller implements ListFiller<Student> {
+public final class StudentListFiller implements ListFiller {
 
     private static final Pattern STUDENT_PATTERN = Pattern.compile("^(\\d+);(\\d+(?:\\.\\d+)?);(\\d{4})$");
     private static final String STUDENT_DATA_PATH = "src/Files/StudentList";
     private static final java.util.Scanner SCANNER = new java.util.Scanner(System.in);
+
+
+    //Вызываем заполнение через этот метод
+    @Override
+    public List<Student> listFill(String fillMethod) {
+        if (fillMethod.toLowerCase().contains("файл")) {
+            return fileFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("ручн")) {
+            return manualFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("рандом")) {
+            return randomFiller(ArrayLenghtScanner.scanSize());
+        } else return null;
+    }
 
     private Student parseStudent(String line) {
         Matcher matcher = STUDENT_PATTERN.matcher(line);
@@ -102,16 +116,16 @@ public final class StudentListFiller implements ListFiller<Student> {
     }
 
     @Override
-    public List<Student> fileFiller() {
+    public List<Student> fileFiller(int size) {
         List<String> lines = readFileLines();
 
-//        if (size <= 0 || size > lines.size()) {
-//            throw new IllegalArgumentException("Некорректный размер списка");
-//        }
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
 
         List<Student> students = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < size; i++) {
             students.add(parseStudent(lines.get(i)));
         }
 
