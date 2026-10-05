@@ -1,10 +1,13 @@
 import java.util.*;
 
+
 import Comparators.CarComparators;
 import Comparators.StudentComparators;
 import Comparators.UserComparators;
 import ListFillers.*;
 import Models.*;
+import Strategies.*;
+import Catalogs.*;
 
 public class TUI {
 
@@ -23,7 +26,7 @@ public class TUI {
     private static String userFieldToSortChoice;
 
     private static HashMap<String, AbstractCustomClass> classPoolMap = new HashMap<>();
-    private static ArrayList<AbstractCustomClass> chosenClassList = new ArrayList<>();
+    private static Catalog chosenClassList = new Catalog(new ArrayList<AbstractCustomClass>(), new Strategies.Sort.DefaultSortStrategy());
     private static HashMap<String, HashMap<String, Comparator>> classComparatorMap = new HashMap<>();
 
 
@@ -194,9 +197,8 @@ public class TUI {
 
     private static void classListSortedPrint() {
         clearConsole();
-        chosenClassList.stream()
-                        .sorted(classComparatorMap.get(userClassChoice).get(userFieldToSortChoice))
-                        .forEach(System.out::println);
+        chosenClassList.sort(new ArrayList<>(Arrays.asList(classComparatorMap.get(userClassChoice).get(userFieldToSortChoice))));
+        chosenClassList.forEach(System.out::println);
         screenHistory.addLast(1);
         chosenClassList.clear();
         pressEnterPrompt();

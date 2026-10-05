@@ -19,7 +19,7 @@ public class CatalogTest {
 	}
 
 	public static boolean testCatalogSort() {
-		Catalog<Car> catalog = new Catalog<Car>();
+		Catalog catalog = new Catalog();
 		Car.Builder builder = Car.builder();
 		builder.power(1000);
 		builder.model("Model1");
@@ -37,7 +37,7 @@ public class CatalogTest {
 		builder.model("Model");
 		builder.year(2011);
 		catalog.add(builder.build());
-		Catalog<Car> catalogE = new Catalog<Car>();
+		Catalog catalogE = new Catalog();
 		builder.power(1000);
 		builder.model("Model2");
 		builder.year(1998);
@@ -54,7 +54,7 @@ public class CatalogTest {
 		builder.model("Model3");
 		builder.year(2012);
 		catalogE.add(builder.build());
-		ArrayList<Comparator<Car>> cArr = new ArrayList<Comparator<Car>>();
+		ArrayList<Comparator> cArr = new ArrayList<Comparator>();
 		cArr.add(CarComparators.BY_POWER);
 		cArr.add(CarComparators.BY_YEAR);
 		cArr.add(CarComparators.BY_MODEL);
