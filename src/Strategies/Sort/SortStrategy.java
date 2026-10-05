@@ -2,7 +2,8 @@ package Strategies.Sort;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import Models.*;
 
 public interface SortStrategy {
-	public abstract <T> void sort(ArrayList<T> arr, ArrayList<Comparator<T>> comparators);
+	public abstract void sort(ArrayList<AbstractCustomClass> arr, ArrayList<Comparator> comparators);
 }
