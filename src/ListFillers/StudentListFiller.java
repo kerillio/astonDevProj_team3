@@ -116,16 +116,16 @@ public final class StudentListFiller implements ListFiller {
     }
 
     @Override
-    public List<Student> fileFiller() {
+    public List<Student> fileFiller(int size) {
         List<String> lines = readFileLines();
 
-//        if (size <= 0 || size > lines.size()) {
-//            throw new IllegalArgumentException("Некорректный размер списка");
-//        }
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
 
         List<Student> students = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < size; i++) {
             students.add(parseStudent(lines.get(i)));
         }
 
