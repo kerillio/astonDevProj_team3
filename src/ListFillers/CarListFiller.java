@@ -14,7 +14,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarListFiller implements ListFiller {
+public final class CarListFiller implements ListFiller<Car> {
 
     private static final Pattern CAR_PATTERN = Pattern.compile("^(\\d{2,4});([^;]+);(\\d{4})$");
     private static final String CAR_DATA_PATH = "src/Files/CarList";
@@ -22,7 +22,7 @@ public final class CarListFiller implements ListFiller {
 
 
     //Вызываем заполнение через этот метод
-    @Override
+    /*@Override
     public List<Car> listFill(String fillMethod) {
         if (fillMethod.toLowerCase().contains("файл")) {
             return fileFiller(ArrayLenghtScanner.scanSize());
@@ -31,7 +31,7 @@ public final class CarListFiller implements ListFiller {
         } else if (fillMethod.toLowerCase().contains("рандом")) {
             return randomFiller(ArrayLenghtScanner.scanSize());
         } else return null;
-    }
+    }*/
 
     private Car parseCar(String line) {
         Matcher matcher = CAR_PATTERN.matcher(line);

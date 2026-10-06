@@ -15,7 +15,7 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class StudentListFiller implements ListFiller {
+public final class StudentListFiller implements ListFiller<Student> {
 
     private static final Pattern STUDENT_PATTERN = Pattern.compile("^(\\d+);(\\d+(?:\\.\\d+)?);(\\d{4})$");
     private static final String STUDENT_DATA_PATH = "src/Files/StudentList";
@@ -23,7 +23,7 @@ public final class StudentListFiller implements ListFiller {
 
 
     //Вызываем заполнение через этот метод
-    @Override
+    /*@Override
     public List<Student> listFill(String fillMethod) {
         if (fillMethod.toLowerCase().contains("файл")) {
             return fileFiller(ArrayLenghtScanner.scanSize());
@@ -32,7 +32,7 @@ public final class StudentListFiller implements ListFiller {
         } else if (fillMethod.toLowerCase().contains("рандом")) {
             return randomFiller(ArrayLenghtScanner.scanSize());
         } else return null;
-    }
+    }*/
 
     private Student parseStudent(String line) {
         Matcher matcher = STUDENT_PATTERN.matcher(line);

@@ -11,6 +11,4 @@ public interface ListFiller<T> {
     List<T>  manualFiller(int size);
 
     List<T>  randomFiller(int size);
-
-    List<T> listFill (String fillMethod);
 }

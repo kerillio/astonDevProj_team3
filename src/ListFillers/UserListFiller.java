@@ -12,7 +12,7 @@ import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class UserListFiller implements ListFiller {
+public final class UserListFiller implements ListFiller<User> {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -20,7 +20,7 @@ public final class UserListFiller implements ListFiller {
 
     //Вызываем заполнение через этот метод
 
-    @Override
+   /* @Override
     public List<User> listFill(String fillMethod) {
         if (fillMethod.toLowerCase().contains("файл")) {
             return fileFiller(ArrayLenghtScanner.scanSize());
@@ -32,7 +32,7 @@ public final class UserListFiller implements ListFiller {
             System.out.println("Filling error");
             return null;
         }
-    }
+    }*/
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);
