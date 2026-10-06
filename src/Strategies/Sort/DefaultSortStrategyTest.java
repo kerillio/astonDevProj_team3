@@ -6,15 +6,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.Objects;
 
-import Models.AbstractCustomClass;
-
 public class DefaultSortStrategyTest {
-	public static final class TestClass extends AbstractCustomClass {
+	public static final class TestClass {
 		private int i;
 		private String s;
 
-		public static final Comparator CI = Comparator.comparingInt(TestClass::getI);
-		public static final Comparator CS = Comparator.comparing(TestClass::getS).reversed();
+		public static final Comparator<TestClass> CI = Comparator.comparingInt(TestClass::getI);
+		public static final Comparator<TestClass> CS = Comparator.comparing(TestClass::getS).reversed();
 
 		public TestClass(int i, String s) {
 			this.i = i;
@@ -41,11 +39,6 @@ public class DefaultSortStrategyTest {
 		public int hashCode() {
 				return Objects.hash(i, s); 
 		}
-
-		@Override
-		public ArrayList<String> getFields() {
-			return new ArrayList<String>();
-		};
 	}
 
 	public static void main(String[] args) {
@@ -59,21 +52,21 @@ public class DefaultSortStrategyTest {
 
 	public static boolean testSort() {
 		DefaultSortStrategy strategy = new DefaultSortStrategy();
-		ArrayList<AbstractCustomClass> arr = new ArrayList<AbstractCustomClass>();
+		ArrayList<TestClass> arr = new ArrayList<TestClass>();
 		arr.add(new TestClass(1, "s"));
 		arr.add(new TestClass(2, "b"));
 		arr.add(new TestClass(2, "d"));
 		arr.add(new TestClass(2, "a"));
 		arr.add(new TestClass(3, "a"));
 		arr.add(new TestClass(1, "a"));
-		ArrayList<AbstractCustomClass> arrResult = new ArrayList<AbstractCustomClass>();
+		ArrayList<TestClass> arrResult = new ArrayList<TestClass>();
 		arrResult.add(new TestClass(1, "s"));
 		arrResult.add(new TestClass(1, "a"));
 		arrResult.add(new TestClass(2, "d"));
 		arrResult.add(new TestClass(2, "b"));
 		arrResult.add(new TestClass(2, "a"));
 		arrResult.add(new TestClass(3, "a"));
-		ArrayList<Comparator> comparatorsArr = new ArrayList<Comparator>();
+		ArrayList<Comparator<TestClass>> comparatorsArr = new ArrayList<Comparator<TestClass>>();
 		comparatorsArr.add(TestClass.CI);
 		comparatorsArr.add(TestClass.CS);
 		strategy.sort(arr, comparatorsArr);
