@@ -5,26 +5,25 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import Strategies.Sort.SortStrategy;
-import Models.AbstractCustomClass;
 
 // Композиция для того, чтобы использовать кастомную сортировку над коллекцией
 // Вначале заполняется arrList, потом используется сортировка
-public class Catalog extends AbstractList<AbstractCustomClass> {
-	private ArrayList<AbstractCustomClass> arrList;
+public class Catalog<T> extends AbstractList<T> {
+	private final ArrayList<T> arrList;
 	private Strategies.Sort.SortStrategy sorter;
 
 	public Catalog() {
-		this.arrList = new ArrayList<AbstractCustomClass>();
+		this.arrList = new ArrayList<T>();
 		this.sorter = new Strategies.Sort.DefaultSortStrategy();
 	}
 
-	public Catalog(ArrayList<AbstractCustomClass> arr, Strategies.Sort.SortStrategy sorter) {
+	public Catalog(ArrayList<T> arr, Strategies.Sort.SortStrategy sorter) {
 		this.arrList = arr;
 		this.sorter = sorter;
 	}
 
 	@Override
-	public AbstractCustomClass get(int index) {
+	public T get(int index) {
 		return arrList.get(index);
 	}
 
@@ -34,29 +33,21 @@ public class Catalog extends AbstractList<AbstractCustomClass> {
 	}
 
 	@Override
-	public boolean add(AbstractCustomClass el) {
+	public boolean add(T el) {
 		return arrList.add(el);
 	}
 
 	@Override
-	public AbstractCustomClass set(int index, AbstractCustomClass el) {
+	public T set(int index, T el) {
 		return arrList.set(index, el);
 	}
 
 	@Override
-	public AbstractCustomClass remove(int index) {
+	public T remove(int index) {
 		return arrList.remove(index);
 	}
 
-	public void sort(ArrayList<Comparator> comparators) {
+	public void sort(ArrayList<Comparator<T>> comparators) {
 		sorter.sort(arrList, comparators);
-	}
-
-	public void setArr(ArrayList<AbstractCustomClass> arrList) {
-		this.arrList = arrList;
-	}
-
-	public void setSorter(Strategies.Sort.SortStrategy sorter) {
-		this.sorter = sorter;
 	}
 }

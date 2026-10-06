@@ -4,10 +4,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.stream.Collectors;
 
-import Models.*;
-
 public class DefaultSortStrategy implements SortStrategy {
-	public void sort(ArrayList<AbstractCustomClass> arr, ArrayList<Comparator> comparators) {
+	public <T> void sort(ArrayList<T> arr, ArrayList<Comparator<T>> comparators) {
 		if (comparators.size() == 0) {
 			arr.sort(null);
 		} else {
