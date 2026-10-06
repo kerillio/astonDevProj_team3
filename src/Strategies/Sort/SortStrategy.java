@@ -1,9 +1,10 @@
 package Strategies.Sort;
-
 import java.util.ArrayList;
 import java.util.Comparator;
-import Models.*;
+import Models.ICustomModel;
 
-public interface SortStrategy {
-	public abstract void sort(ArrayList<AbstractCustomClass> arr, ArrayList<Comparator> comparators);
+
+public interface SortStrategy<T extends ICustomModel> {
+
+	void sort(ArrayList<T> arr, ArrayList<Comparator<T>> comparators);
 }
