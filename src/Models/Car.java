@@ -7,7 +7,7 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.Objects;
 
-public final class Car extends AbstractCustomClass{
+public final class Car implements ICustomModel{
     // ПОЛЯ
     private final int power;
     private final String model;
@@ -20,7 +20,7 @@ public final class Car extends AbstractCustomClass{
         this.power = builder.power;
         this.model = builder.model;
         this.year = builder.year;
-        this.listFillerStrategy = new CarListFiller();
+
     }
 
     // ПУБЛИЧНОЕ АПИ

@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.regex.Pattern;
 
-public final class User extends AbstractCustomClass{
+public final class User implements ICustomModel{
     // ПОЛЯ
     private final String name;
     private final String password;
@@ -18,7 +18,6 @@ public final class User extends AbstractCustomClass{
         this.name = builder.name;
         this.password = builder.password;
         this.email = builder.email;
-        this.listFillerStrategy = new UserListFiller();
     }
 
     // ПУБЛИЧНОЕ АПИ
@@ -67,9 +66,9 @@ public final class User extends AbstractCustomClass{
             return false;
         }
 
-        return name.equals(user.name)
-                && password.equals(user.password)
-                && email.equals(user.email);
+        return Objects.equals(name, user.name)
+                && Objects.equals(password, user.password)
+                && Objects.equals(email, user.email);
     }
 
     @Override
@@ -81,17 +80,9 @@ public final class User extends AbstractCustomClass{
         return new ArrayList<>(List.of("name", "password", "email"));
     }
 
-    public ArrayList<AbstractCustomClass> readFromFile() {
-        return null;
-    }
-
     //Реализация Builder через статический внутренний класс
     // Примечание: для каждого класса мы реализуем свой билдер - у нас нет общих данных
     public static final class Builder {
-
-        private static final Pattern EMAIL_PATTERN = Pattern.compile(
-                "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$"
-        );
 
         private String name;
         private String password;

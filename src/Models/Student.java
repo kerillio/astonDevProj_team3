@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public final class Student extends AbstractCustomClass{
+public final class Student implements ICustomModel {
 
     // ПОЛЯ
     private final String groupNumber;
@@ -18,7 +18,6 @@ public final class Student extends AbstractCustomClass{
         this.groupNumber = builder.groupNumber;
         this.averageGrade = builder.averageGrade;
         this.recordBookNumber = builder.recordBookNumber;
-        this.listFillerStrategy = new StudentListFiller();
     }
 
     // ПУБЛИЧНОЕ АПИ
@@ -84,11 +83,6 @@ public final class Student extends AbstractCustomClass{
 
     public  ArrayList<String> getFields() {
         return new ArrayList<>(List.of("groupNumber", "averageGrade", "recordBookNumber"));
-    }
-
-
-    public ArrayList<AbstractCustomClass> readFromFile() {
-        return null;
     }
 
 
