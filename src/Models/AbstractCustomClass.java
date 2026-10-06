@@ -1,12 +1,24 @@
 package Models;
 
+import ListFillers.*;
+
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.List;
 
-public abstract class AbstractCustomClass {
+public class AbstractCustomClass{
+
+    //Стратегия заполнения
+    ListFiller listFillerStrategy;
+
+    public List<AbstractCustomClass> listFill(String fillMethod) {
+        return listFillerStrategy.listFill(fillMethod);
+    }
 
     //должен вернуть список полей
-    public abstract ArrayList<String> getFields();
+    public ArrayList<String> getFields() {
+        return null;
+    }
 
     //кастомные парсеры
 //    public abstract ArrayList<AbstractCustomClass> readFromFile();

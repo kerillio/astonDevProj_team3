@@ -18,16 +18,11 @@ public class TUI {
     private static LinkedList<Integer> screenHistory = new LinkedList<>();
     private static final Scanner sc = new Scanner(System.in);
     private static boolean exitFlag = false;
-//    private static int currentScreen = 0;
 
     private static String userClassChoice;
-    private static String userFillMethodChoice;
     private static String userFieldToSortChoice;
-    private static int userListLengthChoice;
-    private static int userManualFillLengthChoice;
 
-    private static HashMap<String, AbstractCustomClass> classFieldsMap = new HashMap<>();
-    private static HashMap<String, ListFiller> classFillMethodMap = new HashMap<>();
+    private static HashMap<String, AbstractCustomClass> classPoolMap = new HashMap<>();
     private static ArrayList<AbstractCustomClass> chosenClassList = new ArrayList<>();
     private static HashMap<String, HashMap<String, Comparator>> classComparatorMap = new HashMap<>();
 
@@ -37,10 +32,7 @@ public class TUI {
         screenHistory.addLast(1);
         fillClassPool();
         classComparatorMapFill();
-
-//        System.out.println(classComparatorMap.toString());
-
-        classNameList.addAll(classFieldsMap.keySet());
+        classNameList.addAll(classPoolMap.keySet());
         classNameList.add(classNameList.size(), "Выход");
 
         while (!exitFlag) {
@@ -53,11 +45,10 @@ public class TUI {
                         fillMethodChooseSwitch();
                         break;
                     case 3:
-                        fieldChooseSwitch(classFieldsMap.get(userClassChoice));
+                        fieldChooseSwitch(classPoolMap.get(userClassChoice));
                         break;
-                    case 4 : lengthChooseSwitch();
+                    case 4 : classListSortedPrint();
                         break;
-                    case 5 : classListSortedPrint();
                     default:
                         continue;
                 }
@@ -68,14 +59,9 @@ public class TUI {
     }
 
     private static void fillClassPool() {
-//        classFieldsMap.put("Test", new TestClass());
-        classFieldsMap.put("Student", Student.builder().build());
-        classFieldsMap.put("Car", Car.builder().build());
-        classFieldsMap.put("User", User.builder().build());
-
-        classFillMethodMap.put("Student", new StudentListFiller());
-        classFillMethodMap.put("Car", new CarListFiller());
-        classFillMethodMap.put("User", new UserListFiller());
+        classPoolMap.put("Student", Student.builder().build());
+        classPoolMap.put("Car", Car.builder().build());
+        classPoolMap.put("User", User.builder().build());
     }
 
     private static void classComparatorMapFill () {
@@ -110,20 +96,13 @@ public class TUI {
 
             screenHistory.addLast(2);
 
-            //логика кнопки "назад"
-//            if (screenHistory.size() <= currentScreen){
-//                screenHistory.set(currentScreen, 2);
-//            } else {
-
-//            }
-
 
         } catch (InputMismatchException e) {
             System.out.println("Введите число, а не что-то еще");
             sc.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Введите значение внутри диапазона выбора");
-            return;
+            sc.next();
         }
     }
 
@@ -140,40 +119,15 @@ public class TUI {
                 screenHistory.removeLast();
                 return;
             } else {
-                userFillMethodChoice = fillMethodList.get(userInput);
-
+                chosenClassList.addAll(classPoolMap.get(userClassChoice).listFill(fillMethodList.get(userInput)));
                 screenHistory.addLast(3);
             }
 
-            if (fillMethodList.get(userInput).toLowerCase(Locale.ROOT).contentEquals("заполнить вручную")) {
-                while (userManualFillLengthChoice == 0){
-                    System.out.print("Введите длину списка, который будете вводить:");
-                    try {
-                        userManualFillLengthChoice = sc.nextInt();
-                    } catch (InputMismatchException e) {
-                        System.out.println("\nВведите число, а не что-то еще");
-                        sc.next();
-                    }
-                }
-            } else if (fillMethodList.get(userInput).toLowerCase(Locale.ROOT).contentEquals("заполнение рандомно")) {
-                while (userManualFillLengthChoice == 0) {
-                    System.out.print("Введите величину рандомного заполнения списка:");
-                    try {
-                        userManualFillLengthChoice = sc.nextInt();
-                    } catch (InputMismatchException e) {
-                        System.out.println("\nВведите число, а не что-то еще");
-                        sc.next();
-                    }
-                }
-
-            }
-            fillClassList();
         } catch (InputMismatchException e) {
             System.out.println("Введите число, а не что-то еще");
             sc.next();
         } catch (IndexOutOfBoundsException e) {
             System.out.println("Введите значение внутри диапазона выбора");
-            return;
         }
 
 
@@ -187,12 +141,9 @@ public class TUI {
             if (objectFieldsList.get(userInput).toLowerCase(Locale.ROOT).contentEquals("выход")) {
                 Runtime.getRuntime().exit(0);
             } else if (objectFieldsList.get(userInput).toLowerCase(Locale.ROOT).contentEquals("назад")) {
-//                currentScreen--;
                 screenHistory.removeLast();
-                return;
             } else {
                 userFieldToSortChoice = objectFieldsList.get(userInput);
-//                currentScreen++;
                 screenHistory.addLast(4);
             }
         } catch (InputMismatchException e) {
@@ -202,26 +153,6 @@ public class TUI {
             System.out.println("Введите значение внутри диапазона выбора");
             sc.next();
         }
-    }
-
-    private static void lengthChooseSwitch() {
-        lengthChoosePrint();
-        int userInput = 0;
-        try {
-            userInput = sc.nextInt();
-        } catch (InputMismatchException e) {
-            System.out.println("Введите целое число");
-        }
-
-        if (userInput == 0) {
-            screenHistory.removeLast();
-        } else if (userInput == -1) {
-            Runtime.getRuntime().exit(0);
-        } else {
-            screenHistory.addLast(5);
-            userListLengthChoice = userInput;
-        }
-
     }
 
 
@@ -247,8 +178,8 @@ public class TUI {
     private static void fieldChoosePrint(AbstractCustomClass obj) {
         clearConsole();
         System.out.println("Выбран класс: " + userClassChoice);
-        System.out.println("Выбран метод заполнения: " + userFillMethodChoice + "\n");
-        System.out.println("Выберите поле для сортировки:");
+//        System.out.println("Выбран метод заполнения: " + userFillMethodChoice);
+        System.out.println("\nВыберите поле для сортировки:");
         int i = 1;
         objectFieldsList.clear();
         objectFieldsList.addAll(obj.getFields());
@@ -261,19 +192,10 @@ public class TUI {
         }
     }
 
-    private static void lengthChoosePrint () {
-        clearConsole();
-        System.out.println("Выбран класс: " + userClassChoice);
-        System.out.println("Выбран метод заполнения: " + userFillMethodChoice);
-        System.out.println("Выбрано поле для сортировки: " + userFieldToSortChoice + "\n");
-        System.out.print("Выберите длину готового списка. По умолчанию сортируется весь диапазон(" + chosenClassList.size() + " строк).\n Чтобы перейти назад введите \"0\", чтобы выйти введите \"-1\"\n");
-    }
-
     private static void classListSortedPrint() {
         clearConsole();
         chosenClassList.stream()
                         .sorted(classComparatorMap.get(userClassChoice).get(userFieldToSortChoice))
-                        .limit(userListLengthChoice)
                         .forEach(System.out::println);
         screenHistory.addLast(1);
         chosenClassList.clear();
@@ -286,26 +208,6 @@ public class TUI {
         System.out.print("\nPress enter to continue");
         sc.nextLine();
         sc.nextLine();
-    }
-
-    private static void fillClassList() {
-        //"Заполнить из готового файла","Заполнить вручную","Заполнение рандомно"
-        switch (userFillMethodChoice) {
-            case "Заполнить из готового файла" : {
-                chosenClassList.addAll(classFillMethodMap.get(userClassChoice).fileFiller());
-            }
-                break;
-            case "Заполнить вручную" : {
-                chosenClassList.addAll(classFillMethodMap.get(userClassChoice).manualFiller(userManualFillLengthChoice));
-                userManualFillLengthChoice = 0;
-            }
-                break;
-            case "Заполнение рандомно" : {
-                chosenClassList.addAll(classFillMethodMap.get(userClassChoice).randomFiller(userManualFillLengthChoice));
-                userManualFillLengthChoice = 0;
-            }
-        }
-
     }
 
 

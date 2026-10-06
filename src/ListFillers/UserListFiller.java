@@ -1,5 +1,6 @@
 package ListFillers;
 
+import Models.Car;
 import Models.User;
 import Validation.UserValidator;
 
@@ -7,18 +8,31 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.Files;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class UserListFiller implements ListFiller<User> {
+public final class UserListFiller implements ListFiller {
     private static final Pattern USER_PATTERN = Pattern.compile("^([^;]+);([^;]+);([^;]+)$");
     private static final String USER_FILE_PATH  = "src/Files/UserList";
     private static final Scanner SCANNER = new Scanner(System.in);
 
+
+    //Вызываем заполнение через этот метод
+
+    @Override
+    public List<User> listFill(String fillMethod) {
+        if (fillMethod.toLowerCase().contains("файл")) {
+            return fileFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("ручн")) {
+            return manualFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("рандом")) {
+            return randomFiller(ArrayLenghtScanner.scanSize());
+        } else {
+            System.out.println("Filling error");
+            return null;
+        }
+    }
 
     private User parseUser(String line) {
         Matcher matcher = USER_PATTERN.matcher(line);
@@ -107,16 +121,16 @@ public final class UserListFiller implements ListFiller<User> {
     }
 
     @Override
-    public List<User> fileFiller() {
+    public List<User> fileFiller(int size) {
         List<String> lines = readFileLines();
 
-//        if (size <= 0 || size > lines.size()) {
-//            throw new IllegalArgumentException("Некорректный размер списка");
-//        }
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
 
         List<User> users = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < size; i++) {
             users.add(parseUser(lines.get(i)));
         }
 
