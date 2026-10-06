@@ -6,7 +6,7 @@ import Comparators.StudentComparators;
 import Comparators.UserComparators;
 import ListFillers.*;
 import Models.*;
-import Strategies.*;
+import Strategies.Sort.*;
 import Catalogs.*;
 
 public class TUI {
