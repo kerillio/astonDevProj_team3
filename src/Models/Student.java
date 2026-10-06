@@ -1,4 +1,7 @@
 package Models;
+import ListFillers.ListFiller;
+import ListFillers.StudentListFiller;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -15,6 +18,7 @@ public final class Student extends AbstractCustomClass{
         this.groupNumber = builder.groupNumber;
         this.averageGrade = builder.averageGrade;
         this.recordBookNumber = builder.recordBookNumber;
+        this.listFillerStrategy = new StudentListFiller();
     }
 
     // ПУБЛИЧНОЕ АПИ

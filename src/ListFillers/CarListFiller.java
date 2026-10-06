@@ -14,12 +14,24 @@ import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public final class CarListFiller implements ListFiller<Car> {
+public final class CarListFiller implements ListFiller {
 
     private static final Pattern CAR_PATTERN = Pattern.compile("^(\\d{2,4});([^;]+);(\\d{4})$");
     private static final String CAR_DATA_PATH = "src/Files/CarList";
     private static final Scanner SCANNER = new Scanner(System.in);
 
+
+    //Вызываем заполнение через этот метод
+    @Override
+    public List<Car> listFill(String fillMethod) {
+        if (fillMethod.toLowerCase().contains("файл")) {
+            return fileFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("ручн")) {
+            return manualFiller(ArrayLenghtScanner.scanSize());
+        } else if (fillMethod.toLowerCase().contains("рандом")) {
+            return randomFiller(ArrayLenghtScanner.scanSize());
+        } else return null;
+    }
 
     private Car parseCar(String line) {
         Matcher matcher = CAR_PATTERN.matcher(line);
@@ -103,17 +115,18 @@ public final class CarListFiller implements ListFiller<Car> {
         return cars;
     }
 
+
     @Override
-    public List<Car> fileFiller() {
+    public List<Car> fileFiller(int size) {
         List<String> lines = readFileLines();
 
-//        if (size <= 0 || size > lines.size()) {
-//            throw new IllegalArgumentException("Некорректный размер списка");
-//        }
+        if (size <= 0 || size > lines.size()) {
+            throw new IllegalArgumentException("Некорректный размер списка");
+        }
 
         List<Car> cars = new ArrayList<>();
 
-        for (int i = 0; i < lines.size(); i++) {
+        for (int i = 0; i < size; i++) {
             cars.add(parseCar(lines.get(i)));
         }
 
