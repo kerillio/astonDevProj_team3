@@ -1,17 +1,17 @@
 import java.util.*;
 
 
-import Comparators.CarComparators;
+/*import Comparators.CarComparators;
 import Comparators.StudentComparators;
 import Comparators.UserComparators;
 import ListFillers.*;
 import Models.*;
 import Strategies.*;
-import Catalogs.*;
+import Catalogs.*;*/
 
 public class TUI {
 
-    //пока примерные названия. по мере заполнения классов необходимо их изменить List.of("Автобус", "Пользователь", "Студент", "Автомобиль", "Бочка", "Выход")
+    /*//пока примерные названия. по мере заполнения классов необходимо их изменить List.of("Автобус", "Пользователь", "Студент", "Автомобиль", "Бочка", "Выход")
     private static final ArrayList<String> classNameList = new ArrayList<>();
     //"Заполнить из готового файла","Заполнить вручную","Заполнение рандомно","Назад","Выход"
     private static final ArrayList<String> fillMethodList = new ArrayList<>(List.of("Заполнить из готового файла","Заполнить вручную","Заполнение рандомно","Назад","Выход"));
@@ -216,7 +216,7 @@ public class TUI {
     private static void clearConsole() {
         System.out.println("\n\n\n\n\n");
     }
-
+*/
 
 
 }
