@@ -25,11 +25,8 @@ public class TUI {
     private static String userClassChoice;
     private static String userFieldToSortChoice;
 
-    private static HashMap<String, AbstractCustomClass> classFieldsMap = new HashMap<>();
-    private static HashMap<String, ListFiller> classFillMethodMap = new HashMap<>();
-    private static Catalog chosenClassList = new Catalog(new ArrayList<AbstractCustomClass>(), new Strategies.Sort.DefaultSortStrategy());
     private static HashMap<String, AbstractCustomClass> classPoolMap = new HashMap<>();
-    private static ArrayList<AbstractCustomClass> chosenClassList = new ArrayList<>();
+    private static Catalog chosenClassList = new Catalog(new ArrayList<AbstractCustomClass>(), new Strategies.Sort.DefaultSortStrategy());
     private static HashMap<String, HashMap<String, Comparator>> classComparatorMap = new HashMap<>();
 
 
@@ -201,12 +198,7 @@ public class TUI {
     private static void classListSortedPrint() {
         clearConsole();
         chosenClassList.sort(new ArrayList<>(Arrays.asList(classComparatorMap.get(userClassChoice).get(userFieldToSortChoice))));
-        chosenClassList
-          .subList(0, userListLengthChoice)
-          .forEach(System.out::println);
-        chosenClassList.stream()
-                        .sorted(classComparatorMap.get(userClassChoice).get(userFieldToSortChoice)) // НЕЛЬЗЯ ТАК
-                        .forEach(System.out::println);
+        chosenClassList.forEach(System.out::println);
         screenHistory.addLast(1);
         chosenClassList.clear();
         pressEnterPrompt();
