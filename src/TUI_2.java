@@ -69,6 +69,7 @@ public class TUI_2{
         screens.put(ScreenId.LIST_LENGTH, new ListLengthScreen());
         screens.put(ScreenId.FIELD_SELECT, new FieldSelectScreen(models));
         screens.put(ScreenId.SORTED_LIST, new SortedListScreen(carFiller, studentFiller, userFiller, carParser, studentParser, userParser));
+        screens.put(ScreenId.RECORD_FILE, new RecordToFileScreen());
 
         // НЕ БЕРЕМ В РАСЧЁТ ПОРЯДКА ЭКРАНОВ (ЗАВИСИТ ОТ ВЫБОРА СПОСОБА ЗАПОЛНЕНИЯ)
         screens.put(ScreenId.MANUAL_INPUT, new ManualInputScreen(carParser, studentParser, userParser));

@@ -89,6 +89,7 @@ public final class SortedListScreen implements Screen {
 
     private void showCars(AppState state) {
         Catalog<Car> cars = fillCatalog(carFiller, carParser, state);
+        state.setSortedData(cars);
 
         Comparator<Car> comparator = switch (state.getSelectedField()) {
             case "power" -> CarComparators.BY_POWER;
@@ -105,6 +106,7 @@ public final class SortedListScreen implements Screen {
 
     private void showStudents(AppState state) {
         Catalog<Student> students = fillCatalog(studentFiller, studentParser, state);
+        state.setSortedData(students);
 
         // ВЫБИРАЕМ НУЖНЫЙ КОМПАРАТОР В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО ПОЛЯ
         Comparator<Student> comparator = switch (state.getSelectedField()) {
@@ -120,6 +122,7 @@ public final class SortedListScreen implements Screen {
 
     private void showUsers(AppState state) {
         Catalog<User> users = fillCatalog(userFiller, userParser, state);
+        state.setSortedData(users);
 
         Comparator<User> comparator = switch (state.getSelectedField()) {
             case "name" -> UserComparators.BY_NAME;
@@ -173,17 +176,21 @@ public final class SortedListScreen implements Screen {
         while (true) {
             System.out.println();
             System.out.println("1. В главное меню");
-            System.out.println("2. Назад");
-            System.out.println("3. Выход");
+            System.out.println("2. Записать отсортированную в файл");
+            System.out.println("3. Назад");
+            System.out.println("4. Выход");
 
             switch (scanner.nextLine().trim()) {
                 case "1":
                     return ScreenId.HOME;
 
                 case "2":
-                    return ScreenId.BACK;
+                    return ScreenId.RECORD_FILE;
 
                 case "3":
+                    return ScreenId.BACK;
+
+                case "4":
                     return ScreenId.EXIT;
 
                 default:

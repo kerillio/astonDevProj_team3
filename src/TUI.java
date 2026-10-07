@@ -1,3 +1,4 @@
+import java.nio.file.Paths;
 import java.util.*;
 
 
@@ -17,6 +18,7 @@ public class TUI {
     private static final ArrayList<String> fillMethodList = new ArrayList<>(List.of("Заполнить из готового файла","Заполнить вручную","Заполнение рандомно","Назад","Выход"));
     //"","","","","",
     private static final ArrayList<String> objectFieldsList = new ArrayList<>();
+    private static final ArrayList<String> chooseRecordList = new ArrayList<>(List.of("Записать в файл","Назад","Выход"));
 
     private static LinkedList<Integer> screenHistory = new LinkedList<>();
     private static final Scanner sc = new Scanner(System.in);
@@ -136,6 +138,11 @@ public class TUI {
 
     }
 
+    private static void recordChooseSwitch() {
+        recordChoosePrint();
+
+    }
+
     private static void fieldChooseSwitch(AbstractCustomClass obj) {
         fieldChoosePrint(obj);
         try {
@@ -194,6 +201,17 @@ public class TUI {
             i++;
         }
     }
+
+    private static void recordChoosePrint() {
+        clearConsole();
+        System.out.println("Выбран класс: " + userClassChoice + "\n");
+        System.out.println("Класс отсортирован по полю: " + userFieldToSortChoice);
+        System.out.println("\nЗаписать отсортированный массив в файл?");
+        for (int i = 0; i < chooseRecordList.size(); i++) {
+            System.out.println((i+1) + ". " + chooseRecordList.get(i));
+        }
+    }
+
 
     private static void classListSortedPrint() {
         clearConsole();
