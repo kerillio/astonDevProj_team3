@@ -1,5 +1,8 @@
 package ui;
 
+import catalogs.Catalog;
+import models.ICustomModel;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,7 +13,8 @@ public final class AppState {
     private String selectedField; // ВЫБРАННОЕ ПОЛЕ ДЛЯ СОРТИРОВКИ (ТАКЖЕ ВКЛЮЧАЕТ В СЕБЯ ALL)
     private int listLength;     // РАЗМЕР КОЛЛЕКЦИИ УКАЗАННЫЙ ПОЛЬЗОВАТЕЛЕМ
     private SortType sortType; // DEFAULT / EVEN_NUMERIC
-    private final List<String> manualInputLines = new ArrayList<>(); // СТРОКИ ПОЛЬЗОВАТЕЛЬСКОГО ВВОДА
+    private final List<String> manualInputLines = new ArrayList<>();// СТРОКИ ПОЛЬЗОВАТЕЛЬСКОГО ВВОДА
+    private Catalog<? extends ICustomModel> sortedData;
 
     // ПОЛЬЗОВАТЕЛЬСКИЙ ВВОД
     public List<String> getManualInputLines() {
@@ -69,6 +73,15 @@ public final class AppState {
 
     public void setListLength(int listLength) {
         this.listLength = listLength;
+    }
+
+    public Catalog<? extends ICustomModel> getSortedData(){
+        return sortedData;
+    }
+
+
+    public void setSortedData(Catalog<? extends ICustomModel> sortedData){
+        this.sortedData = sortedData;
     }
 
 

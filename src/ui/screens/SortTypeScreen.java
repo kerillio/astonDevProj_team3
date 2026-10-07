@@ -22,7 +22,7 @@ public final class SortTypeScreen implements Screen {
             // ВЫВОДИМ ПОДСКАЗКИ ПОЛЬЗОВАТЕЛЮ
             System.out.println("Выберите тип сортировки:");
             System.out.println("1. Базовая сортировка");
-            System.out.println("2. Сортировка числового поля по чётным значениям");
+            System.out.println("2. Сортировка числового поля по чётным значениям (Не использовать, пока не реализовано)");
             System.out.println("3. Назад");
             System.out.println("4. Выход");
 

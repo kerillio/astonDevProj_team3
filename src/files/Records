@@ -1,0 +1,38 @@
+
+--- 2026-10-07T16:05:09.945036800 ---
+450;Mercedes-AMG C63;2017
+150;Hyundai Solaris;2018
+570;BMW M5;2019
+300;Toyota Supra;2020
+95;Lada Granta;2021
+
+--- 2026-10-07T16:05:09.945036800 ---
+101;3,9;1001
+102;3,6;1002
+103;4,3;1004
+105;4,8;1008
+107;4,1;1013
+
+--- 2026-10-07T16:05:09.945036800 ---
+Анна;password123;anna@example.com
+Виктория;testPass789;victoria@example.com
+Глеб;demoPass111;gleb@example.com
+Евгений;tempPass333;evgeny@example.com
+Жанна;devPass444;zhanna@example.com
+Игорь;testUser555;igor@example.com
+Ольга;testAcc001;olga@example.com
+Пётр;demoAcc002;petr@example.com
+Семён;tempAcc004;semen@example.com
+Христина;demoAuth007;hristina@example.com
+
+--- 2026-10-07T16:07:39.487019200 ---
+95;Lada Granta;2021
+110;Renault Logan;2019
+150;Hyundai Solaris;2018
+211;Skoda Octavia;2023
+249;Kia Sportage;2022
+300;Toyota Supra;2020
+380;Ford Mustang;2020
+450;Mercedes-AMG C63;2017
+570;BMW M5;2019
+620;Audi RS6;2021
