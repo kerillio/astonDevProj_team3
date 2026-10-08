@@ -4,13 +4,15 @@ import comparators.CarComparators;
 import models.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import strategies.sort.DefaultSortStrategy;
+import ui.AppState;
 
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 class CatalogTest {
-
+    private AppState state;
     private Catalog<Car> catalog;
     private Car car1;
     private Car car2;
@@ -19,7 +21,9 @@ class CatalogTest {
 
     @BeforeEach
     void setUp() {
+        state = new AppState();
         catalog = new Catalog<>();
+        state.setSortStrategy(new DefaultSortStrategy<>());
 
         car1 = Car.builder()
                 .power(100)
@@ -101,13 +105,13 @@ class CatalogTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ КАТАЛОГА ПО ОДНОМУ ПОЛЮ
     @Test
-    void sortWithStrategySortsByPower() {
+    void sortWithStrategySortsByPower() throws InterruptedException {
         catalog.add(car4);
         catalog.add(car1);
         catalog.add(car3);
         catalog.add(car2);
 
-        catalog.sortWithStrategy(CarComparators.BY_POWER);
+        catalog.sortWithStrategy(CarComparators.BY_POWER, state);
 
         assertEquals(100, catalog.get(0).getPower());
         assertEquals(100, catalog.get(1).getPower());
@@ -118,13 +122,13 @@ class CatalogTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ СРАЗУ ПО ВСЕМ ТРЁМ ПОЛЯМ
     @Test
-    void sortWithStrategySortsByAllFields() {
+    void sortWithStrategySortsByAllFields() throws InterruptedException {
         catalog.add(car1);
         catalog.add(car2);
         catalog.add(car4);
         catalog.add(car3);
 
-        catalog.sortWithStrategy(CarComparators.BY_ALL);
+        catalog.sortWithStrategy(CarComparators.BY_ALL, state);
 
         assertEquals(car3, catalog.get(0));
         assertEquals(car2, catalog.get(1));
@@ -152,17 +156,17 @@ class CatalogTest {
 
     // ПРОВЕРЯЕТ, ЧТО ЧЕРЕЗ SETSORTER МОЖНО ПОДМЕНИТЬ СТРАТЕГИЮ СОРТИРОВКИ
     @Test
-    void setSorterChangesSortStrategy() {
+    void setSorterChangesSortStrategy() throws InterruptedException {
         catalog.add(car1);
         catalog.add(car2);
 
-        catalog.setSorter((arr, comparator) -> {
-            Car temp = arr.get(0);
+        state.setSortStrategy((arr, comparator, state) -> {
+            Car temp = (Car) arr.get(0);
             arr.set(0, arr.get(1));
             arr.set(1, temp);
         });
 
-        catalog.sortWithStrategy(CarComparators.BY_POWER);
+        catalog.sortWithStrategy(CarComparators.BY_POWER, state);
 
         assertEquals(car2, catalog.get(0));
         assertEquals(car1, catalog.get(1));
