@@ -173,6 +173,9 @@ public final class SortedListScreen implements Screen {
         for (int i = 0; i < catalog.size(); i ++) {
             System.out.println(i+1 + ". " + catalog.get(i));
         }
+        if (state.getSortType() == SortType.FIND_BY_FIELD) {
+            System.out.println("\nВсего найдено значений: " + catalog.size());
+        }
     }
 
     // ОБРАБАТЫВАЕТ ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ПРОСМОТРА РЕЗУЛЬТАТА
