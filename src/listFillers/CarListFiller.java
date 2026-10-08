@@ -34,8 +34,6 @@ public final class CarListFiller implements ListFiller<Car> {
     public Catalog<Car> randomFiller(int size) {
         List<String> lines = readFileLines();
 
-//        validateSize(size, lines.size());
-
         Collections.shuffle(lines);
 
         Catalog<Car> cars = new Catalog<Car>();
@@ -57,11 +55,6 @@ public final class CarListFiller implements ListFiller<Car> {
         validateSize(size, lines.size());
 
         Catalog<Car> cars = new Catalog<Car>();
-
-
-//        for (int i = 0; i < size; i++) {
-//            cars.add(parser.parse(lines.get(i)));
-//        }
 
         lines.stream().limit(size).forEach(l -> cars.add(parser.parse(l)));
 

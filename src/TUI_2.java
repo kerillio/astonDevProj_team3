@@ -76,7 +76,7 @@ public class TUI_2{
     }
 
     // ГЛАВНЫЙ ЦИКЛ ПРИЛОЖЕНИЯ (ЗАПУСКАЕМ В MAIN)
-    public void run_cycle() {
+    public void runCycle() throws InterruptedException {
         ScreenId currentScreen = ScreenId.CLASS_SELECT; // СТАРТОВЫЙ ЭКРАН
 
         while (true) {

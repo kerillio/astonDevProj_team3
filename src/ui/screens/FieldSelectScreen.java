@@ -1,11 +1,16 @@
 package ui.screens;
 
 import models.ICustomModel;
+import strategies.sort.DefaultSortStrategy;
+import strategies.sort.FindByFieldStrategy;
 import ui.AppState;
 import ui.Screen;
 import ui.ScreenId;
+import ui.SortType;
+
 import java.util.List;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 // ЭКРАН ВЫБОРА ПОЛЯ, ПО КОТОРОМУ БУДЕТ ВЫПОЛНЯТЬСЯ СОРТИРОВКА
@@ -56,6 +61,24 @@ public final class FieldSelectScreen implements Screen {
 
             try {
                 int choice = Integer.parseInt(input);
+
+                if (state.getSortType() == SortType.FIND_BY_FIELD) {
+                    state.setSortStrategy(new FindByFieldStrategy());
+                    System.out.println("Введите значение выбранного поля, по которому будем искать экземпляры");
+                    String fieldParameterToFind = null;
+                    while (fieldParameterToFind == null){
+                        try {
+                            fieldParameterToFind = scanner.nextLine();
+                            System.out.println("Значение записано");
+                            state.setFieldParameterToFind(fieldParameterToFind);
+                        } catch (NoSuchElementException e){
+                            System.out.println("Значение не записано, попробуйте еще раз");
+                        }
+                    }
+
+                } else {
+                    state.setSortStrategy(new DefaultSortStrategy());
+                }
 
                 // ВЫБОР СОРТИРОВКИ СРАЗУ ПО ВСЕМ ПОЛЯМ
                 if (choice == allFieldsChoice) {
