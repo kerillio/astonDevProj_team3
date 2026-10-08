@@ -7,6 +7,7 @@ import models.User;
 import ui.AppState;
 import ui.Screen;
 import ui.ScreenId;
+import ui.SortType;
 
 import java.util.Scanner;
 
@@ -31,22 +32,34 @@ public class RecordToFileScreen implements Screen {
 
     @Override
     public ScreenId show(AppState state, Scanner scanner) {
-            clearConsole();
-            state.getSortedData().forEach(System.out::println);
+        clearConsole();
+        state.getSortedData().forEach(System.out::println);
 
         try {
             // В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО КЛАССА ЗАПУСКАЕМ НУЖНУЮ ОБРАБОТКУ
             switch (state.getSelectedClass()) {
                 case "Car":
-                    carRecord((Catalog<Car>) state.getSortedData());
+                    if (state.getSortType() == SortType.FIND_BY_FIELD) {
+                        carByFieldRecord((Catalog<Car>) state.getSortedData());
+                    } else {
+                        carRecord((Catalog<Car>) state.getSortedData());
+                    }
                     break;
 
                 case "Student":
-                    studentRecord((Catalog<Student>) state.getSortedData());
+                    if (state.getSortType() == SortType.FIND_BY_FIELD) {
+                        studentByFieldRecord((Catalog<Student>) state.getSortedData());;
+                    } else {
+                        studentRecord((Catalog<Student>) state.getSortedData());
+                    }
                     break;
 
                 case "User":
-                    userRecord((Catalog<User>) state.getSortedData());
+                    if (state.getSortType() == SortType.FIND_BY_FIELD) {
+                        userByFieldRecord((Catalog<User>) state.getSortedData());
+                    } else {
+                        userRecord((Catalog<User>) state.getSortedData());
+                    }
                     break;
 
                 default:
@@ -56,17 +69,17 @@ public class RecordToFileScreen implements Screen {
             System.out.println("Ошибка: " + e.getMessage());
         }
 
-            System.out.println("Сохраняем в файл.....");
+        System.out.println("Сохраняем в файл.....");
 
-            return navigation(scanner);
+        return navigation(scanner);
     }
 
     // ОБРАБАТЫВАЕТ ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ПРОСМОТРА РЕЗУЛЬТАТА
     private ScreenId navigation(Scanner scanner) {
         while (true) {
-                System.out.println();
-                System.out.println("1. В главное меню");
-                System.out.println("2. Выход");
+            System.out.println();
+            System.out.println("1. В главное меню");
+            System.out.println("2. Выход");
 
             switch (scanner.nextLine().trim()) {
                 case "1":
@@ -82,6 +95,20 @@ public class RecordToFileScreen implements Screen {
 
     }
 
+    private void recordFindObj(){
+        Path path = Paths.get(RECORD_FILE_PATH);
+        try {
+            Files.writeString(path, "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.writeString(path, sessionMetadata, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.writeString(path, "Количество найденных значений: ", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.writeString(path, Integer.toString(linesRecord.size()), StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.writeString(path, "\n", StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+            Files.write(path, linesRecord, StandardCharsets.UTF_8, StandardOpenOption.APPEND);
+        } catch (IOException e) {
+            throw new RuntimeException("Нет файла для записи или нет прав на создания файла.");
+        }
+    }
+
     private void recordFile(){
         Path path = Paths.get(RECORD_FILE_PATH);
         try {
@@ -92,6 +119,26 @@ public class RecordToFileScreen implements Screen {
             throw new RuntimeException("Нет файла для записи или нет прав на создания файла.");
         }
    }
+    private void carByFieldRecord(Catalog<Car> cars) {
+        linesRecord = cars.stream()
+                .map(car -> String.format("%d;%s;%d", car.getPower(), car.getModel(), car.getYear()))
+                .collect(Collectors.toList());
+        recordFindObj();
+    }
+
+    private void studentByFieldRecord(Catalog<Student> students) {
+        linesRecord = students.stream()
+                .map(student -> String.format("%s;%.1f;%s", student.getGroupNumber(), student.getAverageGrade(), student.getRecordBookNumber()))
+                .collect(Collectors.toList());
+        recordFindObj();
+    }
+
+    private void userByFieldRecord(Catalog<User> users) {
+        linesRecord = users.stream()
+                .map(user -> String.format("%s;%s;%s", user.getName(), user.getPassword(), user.getEmail()))
+                .collect(Collectors.toList());
+        recordFindObj();
+    }
 
 
     private void carRecord(Catalog<Car> cars) {
