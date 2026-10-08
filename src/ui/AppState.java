@@ -2,6 +2,7 @@ package ui;
 
 import catalogs.Catalog;
 import models.ICustomModel;
+import strategies.sort.SortStrategy;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,11 @@ public final class AppState {
     private FillMethod fillMethod; // FILE / RANDOM / MANUAL
     private String selectedField; // ВЫБРАННОЕ ПОЛЕ ДЛЯ СОРТИРОВКИ (ТАКЖЕ ВКЛЮЧАЕТ В СЕБЯ ALL)
     private int listLength;     // РАЗМЕР КОЛЛЕКЦИИ УКАЗАННЫЙ ПОЛЬЗОВАТЕЛЕМ
-    private SortType sortType; // DEFAULT / EVEN_NUMERIC
+    private SortType sortType; // DEFAULT / EVEN_NUMERIC /find_by_field
     private final List<String> manualInputLines = new ArrayList<>();// СТРОКИ ПОЛЬЗОВАТЕЛЬСКОГО ВВОДА
     private Catalog<? extends ICustomModel> sortedData;
+    private SortStrategy<? extends ICustomModel> sortStrategy;
+    private String fieldParameterToFind;
 
     // ПОЛЬЗОВАТЕЛЬСКИЙ ВВОД
     public List<String> getManualInputLines() {
@@ -93,5 +96,21 @@ public final class AppState {
         listLength = 0;
         sortType = null;
         manualInputLines.clear();
+    }
+
+    public SortStrategy getSortStrategy() {
+        return sortStrategy;
+    }
+
+    public void setSortStrategy(SortStrategy sortStrategy) {
+        this.sortStrategy = sortStrategy;
+    }
+
+    public String getFieldParameterToFind() {
+        return fieldParameterToFind;
+    }
+
+    public void setFieldParameterToFind(String fieldParameterToFind) {
+        this.fieldParameterToFind = fieldParameterToFind;
     }
 }

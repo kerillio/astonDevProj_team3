@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class Car implements ICustomModel{
@@ -78,6 +79,17 @@ public final class Car implements ICustomModel{
 
     public  ArrayList<String> getFields() {
         return new ArrayList<>(List.of("power", "year", "model"));
+    }
+
+    @Override
+    public String getFieldValueByFieldName(String fieldName) {
+        switch (fieldName.toLowerCase(Locale.ROOT)) {
+            case "year" : return String.valueOf(this.getYear());
+            case "power" : return String.valueOf(this.getPower());
+            case "model" : return String.valueOf(this.getPower());
+            default: return "Unknown field name";
+
+        }
     }
 
     //Реализация Builder через статический внутренний класс
