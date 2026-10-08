@@ -1,4 +1,3 @@
-/*
 package strategies.sort;
 
 import comparators.CarComparators;
@@ -14,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class EvenNumericSortStrategyTest {
 
     private EvenNumericSortStrategy<Car> strategy;
+    private AppState state;
 
     private Car car1;
     private Car car2;
@@ -25,8 +25,10 @@ class EvenNumericSortStrategyTest {
 
     @BeforeEach
     void setUp() {
-        // ЧЁТНОСТЬ БУДЕМ ПРОВЕРЯТЬ ПО POWER
-        strategy = new EvenNumericSortStrategy<>(Car::getPower);
+        strategy = new EvenNumericSortStrategy<>();
+
+        state = new AppState();
+        state.setSelectedField("power");
 
         car1 = Car.builder().power(5).model("BMW").year(2020).build();
         car2 = Car.builder().power(8).model("BMW").year(2020).build();
@@ -52,7 +54,7 @@ class EvenNumericSortStrategyTest {
         cars.add(car6); // 7  - НЕЧЁТНОЕ
         cars.add(car7); // 4  - ЧЁТНОЕ
 
-        strategy.sort(cars, CarComparators.BY_POWER, new AppState());
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         // НЕЧЁТНЫЕ ОБЪЕКТЫ ДОЛЖНЫ ОСТАТЬСЯ НА СВОИХ ИНДЕКСАХ
         assertSame(car1, cars.get(0));
@@ -83,7 +85,7 @@ class EvenNumericSortStrategyTest {
         cars.add(third);
         cars.add(fourth);
 
-        strategy.sort(cars, CarComparators.BY_POWER, new AppState());
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertEquals(2, cars.get(0).getPower());
         assertEquals(4, cars.get(1).getPower());
@@ -106,7 +108,7 @@ class EvenNumericSortStrategyTest {
         cars.add(second);
         cars.add(third);
 
-        strategy.sort(cars, CarComparators.BY_POWER, new AppState());
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertSame(first, cars.get(0));
         assertSame(second, cars.get(1));
@@ -116,7 +118,7 @@ class EvenNumericSortStrategyTest {
 
     // ПРОВЕРЯЕТ РАБОТУ С ПОВТОРЯЮЩИМИСЯ ЧЁТНЫМИ ЗНАЧЕНИЯМИ
     @Test
-    void sortWorksWithDuplicateEvenValues() {
+    void sortWorksWithDuplicateEvenValues() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         Car first = Car.builder().power(6).model("BMW").year(2020).build();
@@ -129,7 +131,7 @@ class EvenNumericSortStrategyTest {
         cars.add(third);
         cars.add(fourth);
 
-        strategy.sort(cars, CarComparators.BY_POWER, new);
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertEquals(2, cars.get(0).getPower());
         assertEquals(4, cars.get(1).getPower());
@@ -143,7 +145,7 @@ class EvenNumericSortStrategyTest {
     void emptyListDoesNotThrow() {
         ArrayList<Car> cars = new ArrayList<>();
 
-        assertDoesNotThrow(() -> strategy.sort(cars, CarComparators.BY_POWER));
+        assertDoesNotThrow(() -> strategy.sort(cars, CarComparators.BY_POWER, state));
 
         assertTrue(cars.isEmpty());
     }
@@ -151,12 +153,12 @@ class EvenNumericSortStrategyTest {
 
     // ПРОВЕРЯЕТ СПИСОК ИЗ ОДНОГО НЕЧЁТНОГО ЭЛЕМЕНТА
     @Test
-    void oneOddElementDoesNotChange() {
+    void oneOddElementDoesNotChange() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car1);
 
-        strategy.sort(cars, CarComparators.BY_POWER);
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertSame(car1, cars.get(0));
     }
@@ -164,8 +166,11 @@ class EvenNumericSortStrategyTest {
 
     // ПРОВЕРЯЕТ, ЧТО СТРАТЕГИЯ МОЖЕТ РАБОТАТЬ С ДРУГИМ ЧИСЛОВЫМ ПОЛЕМ
     @Test
-    void sortByYearKeepsOddYearsInPlace() {
-        EvenNumericSortStrategy<Car> yearStrategy = new EvenNumericSortStrategy<>(Car::getYear);
+    void sortByYearKeepsOddYearsInPlace() throws InterruptedException {
+        EvenNumericSortStrategy<Car> yearStrategy = new EvenNumericSortStrategy<>();
+
+        AppState yearState = new AppState();
+        yearState.setSelectedField("year");
 
         Car first = Car.builder().power(100).model("BMW").year(2021).build();
         Car second = Car.builder().power(100).model("BMW").year(2024).build();
@@ -181,7 +186,7 @@ class EvenNumericSortStrategyTest {
         cars.add(fourth);
         cars.add(fifth);
 
-        yearStrategy.sort(cars, CarComparators.BY_YEAR);
+        yearStrategy.sort(cars, CarComparators.BY_YEAR, yearState);
 
         // НЕЧЁТНЫЕ ГОДЫ ОСТАЮТСЯ НА СВОИХ МЕСТАХ
         assertSame(first, cars.get(0));
@@ -192,4 +197,4 @@ class EvenNumericSortStrategyTest {
         assertEquals(2022, cars.get(3).getYear());
         assertEquals(2024, cars.get(4).getYear());
     }
-}*/
+}
