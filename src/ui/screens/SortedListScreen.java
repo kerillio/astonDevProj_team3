@@ -50,7 +50,7 @@ public final class SortedListScreen implements Screen {
     }
 
     @Override
-    public ScreenId show(AppState state, Scanner scanner) {
+    public ScreenId show(AppState state, Scanner scanner) throws InterruptedException {
         clearConsole();
 
         System.out.println("Результат сортировки");
@@ -82,7 +82,7 @@ public final class SortedListScreen implements Screen {
         return navigation(scanner);
     }
 
-    private void showCars(AppState state) {
+    private void showCars(AppState state) throws InterruptedException {
         Catalog<Car> cars = fillCatalog(carFiller, carParser, state);
         state.setSortedData(cars);
 
@@ -106,10 +106,10 @@ public final class SortedListScreen implements Screen {
             );
         };
 
-        sortAndPrint(cars, comparator);
+        sortAndPrint(cars, comparator, state);
     }
 
-    private void showStudents(AppState state) {
+    private void showStudents(AppState state) throws InterruptedException {
         Catalog<Student> students = fillCatalog(studentFiller, studentParser, state);
         state.setSortedData(students);
 
@@ -122,10 +122,10 @@ public final class SortedListScreen implements Screen {
             default -> throw new IllegalArgumentException("Неизвестное поле студента: " + state.getSelectedField());
         };
 
-        sortAndPrint(students, comparator);
+        sortAndPrint(students, comparator, state);
     }
 
-    private void showUsers(AppState state) {
+    private void showUsers(AppState state) throws InterruptedException {
         Catalog<User> users = fillCatalog(userFiller, userParser, state);
         state.setSortedData(users);
 
@@ -139,17 +139,24 @@ public final class SortedListScreen implements Screen {
             );
         };
 
-        sortAndPrint(users, comparator);
+        sortAndPrint(users, comparator,state);
     }
 
     // ВЫБИРАЕТ СПОСОБ СОЗДАНИЯ КАТАЛОГА
     private <T extends ICustomModel> Catalog<T> fillCatalog(ListFiller<T> filler, IModelParser<T> parser, AppState state) {
-        return switch (state.getFillMethod()) {
-            case FILE -> filler.fileFiller(state.getListLength());
-            case RANDOM -> filler.randomFiller(state.getListLength());
-            case MANUAL -> fillManualCatalog(parser, state);
-            default -> throw new IllegalStateException("Неизвестный способ заполнения");
-        };
+        switch (state.getFillMethod()) {
+            case FILE:
+                return filler.fileFiller(state.getListLength());
+
+            case RANDOM:
+                return filler.randomFiller(state.getListLength());
+
+            case MANUAL:
+                return fillManualCatalog(parser, state);
+
+            default:
+                throw new IllegalStateException("Неизвестный способ заполнения");
+        }
     }
 
     // ПРЕОБРАЗУЕТ СОХРАНЁННЫЕ СТРОКИ РУЧНОГО ВВОДА В ОБЪЕКТЫ МОДЕЛИ (CAR, USER, STUDENT)
@@ -164,9 +171,14 @@ public final class SortedListScreen implements Screen {
     }
 
     //ЗАПУСКАЕТ КАСТОМНУЮ СОРТИРОВКУ ЧЕРЕЗ STRATEGY И ВЫВОДИТ РЕЗУЛЬТАТ
-    private <T extends ICustomModel> void sortAndPrint(Catalog<T> catalog, Comparator<T> comparator) {
-        catalog.sortWithStrategy(comparator);
-        catalog.forEach(System.out::println);
+    private <T extends ICustomModel> void sortAndPrint(Catalog<T> catalog, Comparator<T> comparator, AppState state) throws InterruptedException {
+        catalog.sortWithStrategy(comparator, state);
+        for (int i = 0; i < catalog.size(); i ++) {
+            System.out.println(i+1 + ". " + catalog.get(i));
+        }
+        if (state.getSortType() == SortType.FIND_BY_FIELD) {
+            System.out.println("\nВсего найдено значений: " + catalog.size());
+        }
     }
 
     // ОБРАБАТЫВАЕТ ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ПРОСМОТРА РЕЗУЛЬТАТА

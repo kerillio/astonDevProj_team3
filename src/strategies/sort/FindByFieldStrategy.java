@@ -14,8 +14,6 @@ public class FindByFieldStrategy<T extends ICustomModel> implements SortStrategy
     public void sort(ArrayList<T> arr, Comparator<T> comparator, AppState state) throws InterruptedException {
 
 
-        System.out.println("Обработка нужным сортировщиком");
-
         //РАЗБИВАЕМ СПИСОК НА ДВЕ ЧАСТИ
         ArrayList<T> firstArr = new ArrayList<>();
         ArrayList<T> secondArr = new ArrayList<>();
