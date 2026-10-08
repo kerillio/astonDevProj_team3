@@ -19,7 +19,7 @@ public class Catalog <T extends ICustomModel> extends AbstractList<T> {
 	private SortStrategy<T> sorter;
 
 	public Catalog() {
-		this.arrList = new ArrayList<T>();
+		this.arrList = new ArrayList<>();
 		this.sorter = new DefaultSortStrategy<>();
 	}
 
