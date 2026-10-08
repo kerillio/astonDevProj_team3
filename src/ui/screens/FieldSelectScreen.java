@@ -2,6 +2,7 @@ package ui.screens;
 
 import models.ICustomModel;
 import strategies.sort.DefaultSortStrategy;
+import strategies.sort.EvenNumericSortStrategy;
 import strategies.sort.FindByFieldStrategy;
 import ui.AppState;
 import ui.Screen;
@@ -76,8 +77,8 @@ public final class FieldSelectScreen implements Screen {
                         }
                     }
 
-                } else {
-                    state.setSortStrategy(new DefaultSortStrategy());
+                } else if (state.getSortType() == SortType.EVEN_NUMERIC) {
+                    state.setSortStrategy(new EvenNumericSortStrategy());
                 }
 
                 // ВЫБОР СОРТИРОВКИ СРАЗУ ПО ВСЕМ ПОЛЯМ

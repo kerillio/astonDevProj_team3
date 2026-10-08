@@ -9,10 +9,9 @@ import ui.AppState;
 
 public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStrategy<T> {
 	// EVEN SORT STRATEGY = СОРТИРОВКА ТОЛЬКО ЧЁТНЫХ ЗНАЧЕНИЙ
-	private final ToIntFunction<T> intGetter;
+//	private final ToIntFunction<T> intGetter;
 
-	public EvenNumericSortStrategy(ToIntFunction<T> intGetter) {
-		this.intGetter = intGetter;
+	public EvenNumericSortStrategy() {
 	}
 
 	@Override
@@ -22,7 +21,12 @@ public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStra
 
 		for (T item : arr) {
 			// Отбираем только четные элементы списка и добавляем к списку, который будем сортировать
-			int value = intGetter.applyAsInt(item);
+			int value = 0;
+			try {
+				value = Integer.parseInt(item.getFieldValueByFieldName(state.getSelectedField()));
+            } catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			}
 			if (value % 2 == 0) movable.add(item);
 		}
 
@@ -33,7 +37,12 @@ public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStra
 		// Заполняем изначальный список отсортированными значениями
 		int ind = 0;
 		for (int i = 0; i < arr.size(); i++) {
-			int value = intGetter.applyAsInt(arr.get(i));
+			int value = 0;
+			try {
+				value = Integer.parseInt(arr.get(i).getFieldValueByFieldName(state.getSelectedField()));
+			} catch (NumberFormatException e) {
+				System.out.println(e.getMessage());
+			}
 			if (value % 2 == 0) {
 				arr.set(i, movable.get(ind));
 				ind++;

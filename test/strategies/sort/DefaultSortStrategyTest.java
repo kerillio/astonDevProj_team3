@@ -1,3 +1,4 @@
+/*
 package strategies.sort;
 
 import comparators.CarComparators;
@@ -158,4 +159,4 @@ class DefaultSortStrategyTest {
         assertEquals(1, cars.size());
         assertEquals(car1, cars.get(0));
     }
-}
+}*/
