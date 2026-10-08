@@ -139,7 +139,7 @@ public final class SortedListScreen implements Screen {
             );
         };
 
-        sortAndPrint(users, comparator,state);
+        sortAndPrint(users, comparator, state);
     }
 
     // ВЫБИРАЕТ СПОСОБ СОЗДАНИЯ КАТАЛОГА
