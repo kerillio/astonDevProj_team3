@@ -89,14 +89,14 @@ public final class SortedListScreen implements Screen {
         Comparator<Car> comparator = switch (state.getSelectedField()) {
             case "power" -> {
               if (state.getSortType() == SortType.EVEN_NUMERIC) {
-                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<>(Car::getPower));
+                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<>());
               }
               yield CarComparators.BY_POWER;
             }
             case "model" -> CarComparators.BY_MODEL;
             case "year" -> {
               if (state.getSortType() == SortType.EVEN_NUMERIC) {
-                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<>(Car::getYear));
+                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<>());
               }
               yield CarComparators.BY_YEAR;
             }
