@@ -28,6 +28,18 @@ public final class FieldSelectScreen implements Screen {
         while (true) {
             clearConsole();
 
+            // ДЛЯ EVEN NUMERIC ВСЕГДА СОРТИРУЕМ ТОЛЬКО ПО МОЩНОСТИ
+            if (state.getSortType() == SortType.EVEN_NUMERIC) {
+                if (!state.getSelectedClass().equals("Car")) {
+                    throw new IllegalStateException("Сортировка EVEN_NUMERIC доступна только для Car");
+                }
+
+                state.setSelectedField("power");
+                state.setSortStrategy(new EvenNumericSortStrategy<>());
+
+                return ScreenId.SORTED_LIST;
+            }
+
             // ПОЛУЧАЕМ МОДЕЛЬ ПО НАЗВАНИЮ КЛАССА (СТРОКИ)
             ICustomModel model = models.get(state.getSelectedClass());
 
@@ -63,27 +75,11 @@ public final class FieldSelectScreen implements Screen {
             try {
                 int choice = Integer.parseInt(input);
 
-                if (state.getSortType() == SortType.FIND_BY_FIELD) {
-                    state.setSortStrategy(new FindByFieldStrategy());
-                    System.out.println("Введите значение выбранного поля, по которому будем искать экземпляры");
-                    String fieldParameterToFind = null;
-                    while (fieldParameterToFind == null){
-                        try {
-                            fieldParameterToFind = scanner.nextLine();
-                            System.out.println("Значение записано");
-                            state.setFieldParameterToFind(fieldParameterToFind);
-                        } catch (NoSuchElementException e){
-                            System.out.println("Значение не записано, попробуйте еще раз");
-                        }
-                    }
-
-                } else if (state.getSortType() == SortType.EVEN_NUMERIC) {
-                    state.setSortStrategy(new EvenNumericSortStrategy());
-                }
-
                 // ВЫБОР СОРТИРОВКИ СРАЗУ ПО ВСЕМ ПОЛЯМ
                 if (choice == allFieldsChoice) {
                     state.setSelectedField("ALL");
+                    state.setSortStrategy(new DefaultSortStrategy<>());
+
                     return ScreenId.SORTED_LIST;
                 }
 
@@ -102,6 +98,27 @@ public final class FieldSelectScreen implements Screen {
 
                 // СОХРАНЯЕМ КОНКРЕТНОЕ ПОЛЕ ВЫБРАННОЕ ПОЛЬЗОВАТЕЛЕМ
                 state.setSelectedField(fields.get(choice - 1));
+
+                if (state.getSortType() == SortType.FIND_BY_FIELD) {
+                    state.setSortStrategy(new FindByFieldStrategy());
+
+                    System.out.println("Введите значение выбранного поля, по которому будем искать экземпляры");
+
+                    String fieldParameterToFind = null;
+
+                    while (fieldParameterToFind == null) {
+                        try {
+                            fieldParameterToFind = scanner.nextLine();
+                            System.out.println("Значение записано");
+                            state.setFieldParameterToFind(fieldParameterToFind);
+                        } catch (NoSuchElementException e) {
+                            System.out.println("Значение не записано, попробуйте еще раз");
+                        }
+                    }
+                } else {
+                    state.setSortStrategy(new DefaultSortStrategy<>());
+                }
+
                 return ScreenId.SORTED_LIST;
 
             } catch (NumberFormatException e) {
