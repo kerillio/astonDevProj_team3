@@ -140,9 +140,7 @@ class DefaultSortStrategyTest {
     void emptyListDoesNotThrow() {
         ArrayList<Car> cars = new ArrayList<>();
 
-        assertDoesNotThrow(() ->
-                strategy.sort(cars, CarComparators.BY_POWER)
-        );
+        assertDoesNotThrow(() -> strategy.sort(cars, CarComparators.BY_POWER));
 
         assertTrue(cars.isEmpty());
     }
