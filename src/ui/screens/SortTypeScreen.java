@@ -20,33 +20,57 @@ public final class SortTypeScreen implements Screen {
             System.out.println();
 
             // ВЫВОДИМ ПОДСКАЗКИ ПОЛЬЗОВАТЕЛЮ
-            System.out.println("Выберите тип сортировки:");
-            System.out.println("1. Базовая сортировка");
-            System.out.println("2. Сортировка числового поля по чётным значениям");
-            System.out.println("3. Назад");
-            System.out.println("4. Выход");
-
+            if (state.getSelectedClass().equalsIgnoreCase("car")) {
+                System.out.println("Выберите тип сортировки:");
+                System.out.println("1. Базовая сортировка");
+                System.out.println("2. Сортировка числового поля по чётным значениям");
+                System.out.println("3. Назад");
+                System.out.println("4. Выход");
+            } else {
+                System.out.println("Выберите тип сортировки:");
+                System.out.println("1. Базовая сортировка");
+                System.out.println("2. Назад");
+                System.out.println("3. Выход");
+            }
             // СЛУШАЕМ ВВОД ПОЛЬЗОВАТЕЛЯ
             String input = scanner.nextLine();
 
             // ОБРАБАТЫВАЕМ ВЫБРАННЫЙ ВАРИАНТ ОТВЕТА
-            switch (input) {
-                case "1":
-                    state.setSortType(SortType.DEFAULT); // ВЫБЕРЕМ СТАНДАРТНУЮ КАСТОМНУЮ СОРТИРОВКУ
-                    return ScreenId.LIST_LENGTH;
 
-                case "2":
-                    state.setSortType(SortType.EVEN_NUMERIC); // СОРТИРОВКА ИЗ ДОП ЗАДАНИЯ
-                    return ScreenId.LIST_LENGTH;
+            if (state.getSelectedClass().equalsIgnoreCase("car")) {
+                switch (input) {
+                    case "1":
+                        state.setSortType(SortType.DEFAULT); // ВЫБЕРЕМ СТАНДАРТНУЮ КАСТОМНУЮ СОРТИРОВКУ
+                        return ScreenId.LIST_LENGTH;
 
-                case "3":
-                    return ScreenId.BACK;
+                    case "2":
+                        state.setSortType(SortType.EVEN_NUMERIC); // СОРТИРОВКА ИЗ ДОП ЗАДАНИЯ
+                        return ScreenId.LIST_LENGTH;
 
-                case "4":
-                    return ScreenId.EXIT;
+                    case "3":
+                        return ScreenId.BACK;
 
-                default:
-                    System.out.println("Некорректный выбор"); // БУДЕМ ЗАНОВО В WHILE(TRUE)
+                    case "4":
+                        return ScreenId.EXIT;
+
+                    default:
+                        System.out.println("Некорректный выбор"); // БУДЕМ ЗАНОВО В WHILE(TRUE)
+                }
+            } else {
+                switch (input) {
+                    case "1":
+                        state.setSortType(SortType.DEFAULT); // ВЫБЕРЕМ СТАНДАРТНУЮ КАСТОМНУЮ СОРТИРОВКУ
+                        return ScreenId.LIST_LENGTH;
+
+                    case "2":
+                        return ScreenId.BACK;
+
+                    case "3":
+                        return ScreenId.EXIT;
+
+                    default:
+                        System.out.println("Некорректный выбор"); // БУДЕМ ЗАНОВО В WHILE(TRUE)
+                }
             }
         }
     }
