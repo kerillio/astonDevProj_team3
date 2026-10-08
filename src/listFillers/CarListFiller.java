@@ -29,6 +29,12 @@ public final class CarListFiller implements ListFiller<Car> {
         }
     }
 
+    @Override
+    public int countLines (){
+        return readFileLines().size();
+    }
+
+
     // ЗАПОЛНЯЕТ КАТАЛОГ СЛУЧАЙНЫМИ ОБЪЕКТАМИ ИЗ ФАЙЛА
     @Override
     public Catalog<Car> randomFiller(int size) {

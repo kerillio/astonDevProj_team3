@@ -144,19 +144,12 @@ public final class SortedListScreen implements Screen {
 
     // ВЫБИРАЕТ СПОСОБ СОЗДАНИЯ КАТАЛОГА
     private <T extends ICustomModel> Catalog<T> fillCatalog(ListFiller<T> filler, IModelParser<T> parser, AppState state) {
-        switch (state.getFillMethod()) {
-            case FILE:
-                return filler.fileFiller(state.getListLength());
-
-            case RANDOM:
-                return filler.randomFiller(state.getListLength());
-
-            case MANUAL:
-                return fillManualCatalog(parser, state);
-
-            default:
-                throw new IllegalStateException("Неизвестный способ заполнения");
-        }
+        return switch (state.getFillMethod()) {
+            case FILE -> filler.fileFiller(state.getListLength());
+            case RANDOM -> filler.randomFiller(state.getListLength());
+            case MANUAL -> fillManualCatalog(parser, state);
+            default -> throw new IllegalStateException("Неизвестный способ заполнения");
+        };
     }
 
     // ПРЕОБРАЗУЕТ СОХРАНЁННЫЕ СТРОКИ РУЧНОГО ВВОДА В ОБЪЕКТЫ МОДЕЛИ (CAR, USER, STUDENT)

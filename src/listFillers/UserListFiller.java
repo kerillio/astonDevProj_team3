@@ -53,6 +53,11 @@ public final class UserListFiller implements ListFiller<User> {
         return users;
     }
 
+    @Override
+    public int countLines (){
+        return readFileLines().size();
+    }
+
     // ЗАПОЛНЯЕТ КАТАЛОГ ПЕРВЫМИ ОБЪЕКТАМИ ИЗ ФАЙЛА В ИСХОДНОМ ПОРЯДКЕ
     @Override
     public Catalog<User> fileFiller(int size) {
