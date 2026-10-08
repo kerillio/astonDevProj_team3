@@ -1,10 +1,10 @@
-/*
 package strategies.sort;
 
 import comparators.CarComparators;
 import models.Car;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import ui.AppState;
 
 import java.util.ArrayList;
 
@@ -13,6 +13,7 @@ import static org.junit.jupiter.api.Assertions.*;
 class DefaultSortStrategyTest {
 
     private DefaultSortStrategy<Car> strategy;
+    private AppState state;
 
     private Car car1;
     private Car car2;
@@ -22,6 +23,7 @@ class DefaultSortStrategyTest {
     @BeforeEach
     void setUp() {
         strategy = new DefaultSortStrategy<>();
+        state = new AppState();
 
         car1 = Car.builder()
                 .power(300)
@@ -51,14 +53,14 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ ПО МОЩНОСТИ
     @Test
-    void sortByPower() {
+    void sortByPower() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car1);
         cars.add(car2);
         cars.add(car3);
 
-        strategy.sort(cars, CarComparators.BY_POWER);
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertEquals(car2, cars.get(0));
         assertEquals(car3, cars.get(1));
@@ -68,14 +70,14 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ ПО МОДЕЛИ
     @Test
-    void sortByModel() {
+    void sortByModel() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car3);
         cars.add(car1);
         cars.add(car2);
 
-        strategy.sort(cars, CarComparators.BY_MODEL);
+        strategy.sort(cars, CarComparators.BY_MODEL, state);
 
         assertEquals(car2, cars.get(0));
         assertEquals(car1, cars.get(1));
@@ -85,14 +87,14 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ ПО ГОДУ
     @Test
-    void sortByYear() {
+    void sortByYear() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car2);
         cars.add(car1);
         cars.add(car3);
 
-        strategy.sort(cars, CarComparators.BY_YEAR);
+        strategy.sort(cars, CarComparators.BY_YEAR, state);
 
         assertEquals(car3, cars.get(0));
         assertEquals(car1, cars.get(1));
@@ -102,7 +104,7 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ СРАЗУ ПО ВСЕМ ТРЁМ ПОЛЯМ
     @Test
-    void sortByAllFields() {
+    void sortByAllFields() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car1);
@@ -110,7 +112,7 @@ class DefaultSortStrategyTest {
         cars.add(car3);
         cars.add(car4);
 
-        strategy.sort(cars, CarComparators.BY_ALL);
+        strategy.sort(cars, CarComparators.BY_ALL, state);
 
         assertEquals(car4, cars.get(0));
         assertEquals(car2, cars.get(1));
@@ -121,14 +123,14 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ, ЧТО УЖЕ ОТСОРТИРОВАННЫЙ СПИСОК НЕ ЛОМАЕТСЯ
     @Test
-    void alreadySortedListRemainsSorted() {
+    void alreadySortedListRemainsSorted() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car2);
         cars.add(car3);
         cars.add(car1);
 
-        strategy.sort(cars, CarComparators.BY_POWER);
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertEquals(car2, cars.get(0));
         assertEquals(car3, cars.get(1));
@@ -141,7 +143,7 @@ class DefaultSortStrategyTest {
     void emptyListDoesNotThrow() {
         ArrayList<Car> cars = new ArrayList<>();
 
-        assertDoesNotThrow(() -> strategy.sort(cars, CarComparators.BY_POWER));
+        assertDoesNotThrow(() -> strategy.sort(cars, CarComparators.BY_POWER, state));
 
         assertTrue(cars.isEmpty());
     }
@@ -149,14 +151,14 @@ class DefaultSortStrategyTest {
 
     // ПРОВЕРЯЕТ СОРТИРОВКУ СПИСКА ИЗ ОДНОГО ЭЛЕМЕНТА
     @Test
-    void oneElementListDoesNotChange() {
+    void oneElementListDoesNotChange() throws InterruptedException {
         ArrayList<Car> cars = new ArrayList<>();
 
         cars.add(car1);
 
-        strategy.sort(cars, CarComparators.BY_POWER);
+        strategy.sort(cars, CarComparators.BY_POWER, state);
 
         assertEquals(1, cars.size());
         assertEquals(car1, cars.get(0));
     }
-}*/
+}
