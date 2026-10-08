@@ -34,6 +34,10 @@ public final class StudentListFiller implements ListFiller<Student> {
         }
     }
 
+    @Override
+    public int countLines (){
+        return readFileLines().size();
+    }
 
     // ЗАПОЛНЯЕТ КАТАЛОГ СЛУЧАЙНЫМИ ОБЪЕКТАМИ ИЗ ФАЙЛА
     @Override

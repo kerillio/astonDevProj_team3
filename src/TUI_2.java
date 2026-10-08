@@ -66,7 +66,7 @@ public class TUI_2{
         screens.put(ScreenId.CLASS_SELECT, new ClassSelectScreen(List.of("Car", "Student", "User")));
         screens.put(ScreenId.FILL_METHOD, new FillMethodScreen());
         screens.put(ScreenId.SORT_TYPE, new SortTypeScreen());
-        screens.put(ScreenId.LIST_LENGTH, new ListLengthScreen());
+        screens.put(ScreenId.LIST_LENGTH, new ListLengthScreen(carFiller, studentFiller, userFiller));
         screens.put(ScreenId.FIELD_SELECT, new FieldSelectScreen(models));
         screens.put(ScreenId.SORTED_LIST, new SortedListScreen(carFiller, studentFiller, userFiller, carParser, studentParser, userParser));
         screens.put(ScreenId.RECORD_FILE, new RecordToFileScreen());
