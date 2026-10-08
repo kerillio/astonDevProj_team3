@@ -4,12 +4,13 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import models.*;
+import ui.AppState;
 
 public class DefaultSortStrategy<T extends ICustomModel> implements SortStrategy<T> {
 	// DEFAULT SORT STRATEGY = СОРТИРОВКА ПУЗЫРЬКОМ
 	// Я НЕ СТАЛ НАЗВАНИЕ КЛАССА МЕНЯТЬ, ПОТОМ МОЖНО ЗАРЕНЕЙМИТЬ
 	@Override
-	public void sort(ArrayList<T> arr, Comparator<T> comparator) {
+	public void sort(ArrayList<T> arr, Comparator<T> comparator, AppState state) {
 		for (int i = 0; i < arr.size() - 1; i++) { // <- СОРТИРУЕМ ПУЗЫРЬКОМ
 			boolean swapped = false;
 

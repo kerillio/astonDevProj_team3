@@ -63,7 +63,7 @@ public final class CarListFiller implements ListFiller<Car> {
 //            cars.add(parser.parse(lines.get(i)));
 //        }
 
-        lines.stream().limit(size).forEach(l -> cars.addLast(parser.parse(l)));
+        lines.stream().limit(size).forEach(l -> cars.add(parser.parse(l)));
 
         return cars;
     }

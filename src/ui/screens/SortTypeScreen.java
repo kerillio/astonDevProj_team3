@@ -1,5 +1,7 @@
 package ui.screens;
 
+import strategies.sort.DefaultSortStrategy;
+import strategies.sort.FindByFieldStrategy;
 import ui.AppState;
 import ui.Screen;
 import ui.ScreenId;
@@ -23,8 +25,9 @@ public final class SortTypeScreen implements Screen {
             System.out.println("Выберите тип сортировки:");
             System.out.println("1. Базовая сортировка");
             System.out.println("2. Сортировка числового поля по чётным значениям (Не использовать, пока не реализовано)");
-            System.out.println("3. Назад");
-            System.out.println("4. Выход");
+            System.out.println("3. Поиск по значению поля, вывод списка и количества в консоль");
+            System.out.println("4. Назад");
+            System.out.println("5. Выход");
 
             // СЛУШАЕМ ВВОД ПОЛЬЗОВАТЕЛЯ
             String input = scanner.nextLine();
@@ -33,6 +36,7 @@ public final class SortTypeScreen implements Screen {
             switch (input) {
                 case "1":
                     state.setSortType(SortType.DEFAULT); // ВЫБЕРЕМ СТАНДАРТНУЮ КАСТОМНУЮ СОРТИРОВКУ
+                    state.setSortStrategy(new DefaultSortStrategy());
                     return ScreenId.LIST_LENGTH;
 
                 case "2":
@@ -40,9 +44,14 @@ public final class SortTypeScreen implements Screen {
                     return ScreenId.LIST_LENGTH;
 
                 case "3":
-                    return ScreenId.BACK;
+                    state.setSortType(SortType.FIND_BY_FIELD);
+                    state.setSortStrategy(new FindByFieldStrategy());
+                    return ScreenId.LIST_LENGTH;
 
                 case "4":
+                    return ScreenId.BACK;
+
+                case "5":
                     return ScreenId.EXIT;
 
                 default:

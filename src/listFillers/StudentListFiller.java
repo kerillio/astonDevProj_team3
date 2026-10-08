@@ -65,7 +65,7 @@ public final class StudentListFiller implements ListFiller<Student> {
 //        for (int i = 0; i < size; i++) {
 //            students.add(parser.parse(lines.get(i)));
 //        }
-        lines.stream().limit(size).forEach(l -> students.addLast(parser.parse(l)));
+        lines.stream().limit(size).forEach(l -> students.add(parser.parse(l)));
 
         return students;
     }

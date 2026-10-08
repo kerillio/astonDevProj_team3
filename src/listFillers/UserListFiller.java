@@ -68,7 +68,7 @@ public final class UserListFiller implements ListFiller<User> {
 //            users.add(parser.parse(lines.get(i)));
 //        }
 
-        lines.stream().limit(size).forEach(l -> users.addLast(parser.parse(l)));
+        lines.stream().limit(size).forEach(l -> users.add(parser.parse(l)));
 
         return users;
     }

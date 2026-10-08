@@ -1,5 +1,6 @@
 package ui.screens;
 
+import Test.Main;
 import catalogs.Catalog;
 import comparators.CarComparators;
 import comparators.StudentComparators;
@@ -50,44 +51,45 @@ public final class SortedListScreen implements Screen {
     }
 
     @Override
-    public ScreenId show(AppState state, Scanner scanner) {
+    public ScreenId show(AppState state, Scanner scanner) throws InterruptedException {
         clearConsole();
 
         System.out.println("Результат сортировки");
         System.out.println();
 
-        if (state.getSortType() != SortType.DEFAULT) {
+        if (state.getSortType() == SortType.DEFAULT || state.getSortType() == SortType.FIND_BY_FIELD) {
+            try {
+                // В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО КЛАССА ЗАПУСКАЕМ НУЖНУЮ ОБРАБОТКУ
+                switch (state.getSelectedClass()) {
+                    case "Car":
+                        showCars(state);
+                        break;
+
+                    case "Student":
+                        showStudents(state);
+                        break;
+
+                    case "User":
+                        showUsers(state);
+                        break;
+
+                    default:
+                        throw new IllegalStateException("Неизвестный класс: " + state.getSelectedClass());
+                }
+            } catch (IllegalArgumentException e) {
+                System.out.println("Ошибка: " + e.getMessage());
+            }
+        }else if (state.getSortType() == SortType.EVEN_NUMERIC) {
             System.out.println("Дополнительная сортировка пока не реализована."); // TODO: СДЕЛАТЬ ДОПОЛНИТЕЛЬНУЮ СОРТИРОВКУ
             return navigation(scanner);
         }
 
-        try {
-            // В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО КЛАССА ЗАПУСКАЕМ НУЖНУЮ ОБРАБОТКУ
-            switch (state.getSelectedClass()) {
-                case "Car":
-                    showCars(state);
-                    break;
-
-                case "Student":
-                    showStudents(state);
-                    break;
-
-                case "User":
-                    showUsers(state);
-                    break;
-
-                default:
-                    throw new IllegalStateException("Неизвестный класс: " + state.getSelectedClass());
-            }
-        } catch (IllegalArgumentException e) {
-            System.out.println("Ошибка: " + e.getMessage());
-        }
 
         // ПОСЛЕ ВЫВОДА РЕЗУЛЬТАТА ПОКАЗЫВАЕМ НАВИГАЦИЮ
         return navigation(scanner);
     }
 
-    private void showCars(AppState state) {
+    private void showCars(AppState state) throws InterruptedException {
         Catalog<Car> cars = fillCatalog(carFiller, carParser, state);
         state.setSortedData(cars);
 
@@ -101,10 +103,10 @@ public final class SortedListScreen implements Screen {
             );
         };
 
-        sortAndPrint(cars, comparator);
+        sortAndPrint(cars, comparator, state);
     }
 
-    private void showStudents(AppState state) {
+    private void showStudents(AppState state) throws InterruptedException {
         Catalog<Student> students = fillCatalog(studentFiller, studentParser, state);
         state.setSortedData(students);
 
@@ -117,10 +119,10 @@ public final class SortedListScreen implements Screen {
             default -> throw new IllegalArgumentException("Неизвестное поле студента: " + state.getSelectedField());
         };
 
-        sortAndPrint(students, comparator);
+        sortAndPrint(students, comparator, state);
     }
 
-    private void showUsers(AppState state) {
+    private void showUsers(AppState state) throws InterruptedException {
         Catalog<User> users = fillCatalog(userFiller, userParser, state);
         state.setSortedData(users);
 
@@ -134,7 +136,7 @@ public final class SortedListScreen implements Screen {
             );
         };
 
-        sortAndPrint(users, comparator);
+        sortAndPrint(users, comparator, state);
     }
 
     // ВЫБИРАЕТ СПОСОБ СОЗДАНИЯ КАТАЛОГА
@@ -166,9 +168,11 @@ public final class SortedListScreen implements Screen {
     }
 
     //ЗАПУСКАЕТ КАСТОМНУЮ СОРТИРОВКУ ЧЕРЕЗ STRATEGY И ВЫВОДИТ РЕЗУЛЬТАТ
-    private <T extends ICustomModel> void sortAndPrint(Catalog<T> catalog, Comparator<T> comparator) {
-        catalog.sortWithStrategy(comparator);
-        catalog.forEach(System.out::println);
+    private <T extends ICustomModel> void sortAndPrint(Catalog<T> catalog, Comparator<T> comparator, AppState state) throws InterruptedException {
+        catalog.sortWithStrategy(comparator, state);
+        for (int i = 0; i < catalog.size(); i ++) {
+            System.out.println(i+1 + ". " + catalog.get(i));
+        }
     }
 
     // ОБРАБАТЫВАЕТ ДЕЙСТВИЯ ПОЛЬЗОВАТЕЛЯ ПОСЛЕ ПРОСМОТРА РЕЗУЛЬТАТА

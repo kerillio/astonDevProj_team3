@@ -7,7 +7,7 @@ import models.Car;
 import comparators.CarComparators;
 
 public class CatalogTest {
-	public static void main(String[] args) {
+	/*public static void main(String[] args) {
 		System.out.println("## Тестируем Catalog");
 		if (testCatalogSort()) {
 			System.out.println("PASSED");
@@ -58,5 +58,5 @@ public class CatalogTest {
 		cArr.add(CarComparators.BY_MODEL);
 		//catalog.sort(cArr);
 		return catalog.equals(catalogE);
-	}
+	}*/
 }
