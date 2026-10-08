@@ -64,7 +64,7 @@ public final class ListLengthScreen implements Screen {
 
                 // ДЛЯ FILE И RANDOM ПРОВЕРЯЕМ, ЧТО ПОЛЬЗОВАТЕЛЬ
                 // НЕ ЗАПРОСИЛ БОЛЬШЕ ЭЛЕМЕНТОВ, ЧЕМ ЕСТЬ СТРОК В ФАЙЛЕ
-                if (state.getFillMethod() != FillMethod.MANUAL) {
+                if (state.getFillMethod() == FillMethod.FILE) {
                     if (length > availableSize) {
                         System.out.println("Доступно только " + availableSize + " элементов");
                         continue;
