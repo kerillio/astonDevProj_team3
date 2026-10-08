@@ -56,11 +56,6 @@ public final class SortedListScreen implements Screen {
         System.out.println("Результат сортировки");
         System.out.println();
 
-        if (state.getSortType() != SortType.DEFAULT) {
-            System.out.println("Дополнительная сортировка пока не реализована."); // TODO: СДЕЛАТЬ ДОПОЛНИТЕЛЬНУЮ СОРТИРОВКУ
-            return navigation(scanner);
-        }
-
         try {
             // В ЗАВИСИМОСТИ ОТ ВЫБРАННОГО КЛАССА ЗАПУСКАЕМ НУЖНУЮ ОБРАБОТКУ
             switch (state.getSelectedClass()) {
@@ -92,9 +87,19 @@ public final class SortedListScreen implements Screen {
         state.setSortedData(cars);
 
         Comparator<Car> comparator = switch (state.getSelectedField()) {
-            case "power" -> CarComparators.BY_POWER;
+            case "power" -> {
+              if (state.getSortType() == SortType.EVEN_NUMERIC) {
+                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<Car>(Car::getPower));
+              };
+              yield CarComparators.BY_POWER;
+            }
             case "model" -> CarComparators.BY_MODEL;
-            case "year" -> CarComparators.BY_YEAR;
+            case "year" -> {
+              if (state.getSortType() == SortType.EVEN_NUMERIC) {
+                cars.setSorter(new strategies.sort.EvenNumericSortStrategy<Car>(Car::getYear));
+              };
+              yield CarComparators.BY_YEAR;
+            }
             case "ALL" -> CarComparators.BY_ALL;
             default -> throw new IllegalArgumentException(
                     "Неизвестное поле автомобиля: " + state.getSelectedField()
