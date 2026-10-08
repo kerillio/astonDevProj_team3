@@ -8,7 +8,7 @@ import models.*;
 
 public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStrategy<T> {
 	// EVEN SORT STRATEGY = СОРТИРОВКА ТОЛЬКО ЧЁТНЫХ ЗНАЧЕНИЙ
-	private ToIntFunction<T> intGetter;
+	private final ToIntFunction<T> intGetter;
 
 	public EvenNumericSortStrategy(ToIntFunction<T> intGetter) {
 		this.intGetter = intGetter;
@@ -26,7 +26,7 @@ public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStra
 		}
 
 		// Сортируем список
-		SortStrategy sorter = new DefaultSortStrategy();
+		SortStrategy<T> sorter = new DefaultSortStrategy<>();
 		sorter.sort(movable, comparator);
 
 		// Заполняем изначальный список отсортированными значениями

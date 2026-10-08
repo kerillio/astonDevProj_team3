@@ -40,8 +40,6 @@ public final class StudentListFiller implements ListFiller<Student> {
     public Catalog<Student> randomFiller(int size) {
         List<String> lines = readFileLines();
 
-//        validateSize(size, lines.size());
-
         Collections.shuffle(lines);
 
         Catalog<Student> students = new Catalog<>();
@@ -62,9 +60,6 @@ public final class StudentListFiller implements ListFiller<Student> {
 
         Catalog<Student> students = new Catalog<>();
 
-//        for (int i = 0; i < size; i++) {
-//            students.add(parser.parse(lines.get(i)));
-//        }
         lines.stream().limit(size).forEach(l -> students.add(parser.parse(l)));
 
         return students;
