@@ -5,8 +5,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 
 import models.ICustomModel;
-import strategies.sort.DefaultSortStrategy;
 import strategies.sort.SortStrategy;
+import ui.AppState;
 
 // Композиция для того, чтобы использовать кастомную сортировку над коллекцией
 // Вначале заполняется arrList, потом используется сортировка
@@ -19,8 +19,7 @@ public class Catalog <T extends ICustomModel> extends AbstractList<T> {
 	private SortStrategy<T> sorter;
 
 	public Catalog() {
-		this.arrList = new ArrayList<>();
-		this.sorter = new DefaultSortStrategy<>();
+		this.arrList = new ArrayList<T>();
 	}
 
 	@Override
@@ -48,8 +47,9 @@ public class Catalog <T extends ICustomModel> extends AbstractList<T> {
 		return arrList.remove(index);
 	}
 
-	public void sortWithStrategy(Comparator<T> comparator) {
-		sorter.sort(arrList, comparator);
+	public void sortWithStrategy(Comparator<T> comparator, AppState state) throws InterruptedException {
+		sorter = state.getSortStrategy();
+		sorter.sort(arrList, comparator, state);
 	}
 
 	public void setArr(ArrayList<T> arrList) {

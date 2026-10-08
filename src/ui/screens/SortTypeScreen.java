@@ -1,5 +1,7 @@
 package ui.screens;
 
+import strategies.sort.DefaultSortStrategy;
+import strategies.sort.FindByFieldStrategy;
 import ui.AppState;
 import ui.Screen;
 import ui.ScreenId;
@@ -24,13 +26,15 @@ public final class SortTypeScreen implements Screen {
                 System.out.println("Выберите тип сортировки:");
                 System.out.println("1. Базовая сортировка");
                 System.out.println("2. Сортировка числового поля по чётным значениям");
-                System.out.println("3. Назад");
-                System.out.println("4. Выход");
+                System.out.println("3. Поиск по значению выбранного поля, вывод списка и общего количества");
+                System.out.println("4. Назад");
+                System.out.println("5. Выход");
             } else {
                 System.out.println("Выберите тип сортировки:");
                 System.out.println("1. Базовая сортировка");
-                System.out.println("2. Назад");
-                System.out.println("3. Выход");
+                System.out.println("2. Поиск по значению выбранного поля, вывод списка и общего количества");
+                System.out.println("3. Назад");
+                System.out.println("4. Выход");
             }
             // СЛУШАЕМ ВВОД ПОЛЬЗОВАТЕЛЯ
             String input = scanner.nextLine();
@@ -48,9 +52,13 @@ public final class SortTypeScreen implements Screen {
                         return ScreenId.LIST_LENGTH;
 
                     case "3":
-                        return ScreenId.BACK;
+                        state.setSortType(SortType.FIND_BY_FIELD); // СОРТИРОВКА ИЗ ДОП ЗАДАНИЯ
+                        return ScreenId.LIST_LENGTH;
 
                     case "4":
+                        return ScreenId.BACK;
+
+                    case "5":
                         return ScreenId.EXIT;
 
                     default:
@@ -63,9 +71,13 @@ public final class SortTypeScreen implements Screen {
                         return ScreenId.LIST_LENGTH;
 
                     case "2":
-                        return ScreenId.BACK;
+                        state.setSortType(SortType.FIND_BY_FIELD); // ВЫБЕРЕМ СТАНДАРТНУЮ КАСТОМНУЮ СОРТИРОВКУ
+                        return ScreenId.LIST_LENGTH;
 
                     case "3":
+                        return ScreenId.BACK;
+
+                    case "4":
                         return ScreenId.EXIT;
 
                     default:

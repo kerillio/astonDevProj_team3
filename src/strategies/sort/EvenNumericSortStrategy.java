@@ -5,6 +5,7 @@ import java.util.Comparator;
 import java.util.function.ToIntFunction;
 
 import models.*;
+import ui.AppState;
 
 public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStrategy<T> {
 	// EVEN SORT STRATEGY = СОРТИРОВКА ТОЛЬКО ЧЁТНЫХ ЗНАЧЕНИЙ
@@ -15,7 +16,7 @@ public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStra
 	}
 
 	@Override
-	public void sort(ArrayList<T> arr, Comparator<T> comparator) {
+	public void sort(ArrayList<T> arr, Comparator<T> comparator, AppState state) throws InterruptedException {
 		// Создаем список, который будем сортировать
 		ArrayList<T> movable = new ArrayList<>();
 
@@ -27,7 +28,7 @@ public class EvenNumericSortStrategy<T extends ICustomModel> implements SortStra
 
 		// Сортируем список
 		SortStrategy<T> sorter = new DefaultSortStrategy<>();
-		sorter.sort(movable, comparator);
+		sorter.sort(movable, comparator, state);
 
 		// Заполняем изначальный список отсортированными значениями
 		int ind = 0;

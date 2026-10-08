@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class User implements ICustomModel{
@@ -75,6 +76,16 @@ public final class User implements ICustomModel{
 
     public  ArrayList<String> getFields() {
         return new ArrayList<>(List.of("name", "password", "email"));
+    }
+
+    @Override
+    public String getFieldValueByFieldName(String fieldName) {
+        switch (fieldName.toLowerCase(Locale.ROOT)) {
+            case "name" : return String.valueOf(this.getName());
+            case "password" : return String.valueOf(this.getPassword());
+            case "email" : return String.valueOf(this.getEmail());
+            default: return "Unknown field name";
+        }
     }
 
     //Реализация Builder через статический внутренний класс

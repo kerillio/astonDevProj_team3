@@ -2,6 +2,7 @@ package models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Objects;
 
 public final class Student implements ICustomModel {
@@ -81,6 +82,16 @@ public final class Student implements ICustomModel {
 
     public  ArrayList<String> getFields() {
         return new ArrayList<>(List.of("groupNumber", "averageGrade", "recordBookNumber"));
+    }
+
+    @Override
+    public String getFieldValueByFieldName(String fieldName) {
+        switch (fieldName.toLowerCase(Locale.ROOT)) {
+            case "groupnumber" : return String.valueOf(this.getGroupNumber());
+            case "averagegrade" : return String.valueOf(this.getAverageGrade());
+            case "recordbooknumber" : return String.valueOf(this.getAverageGrade());
+            default: return "unknown field name";
+        }
     }
 
 
